@@ -1,0 +1,42 @@
+.hidden-print .breadcrumb {margin: 0px; border: 0; line-height: 30px; background: #fff;}
+.cms-logo{ background: #fff none repeat scroll 0 0;padding: 1px 1px;}
+
+.vbox > section.w-f {top: 50px; }
+.nav-primary > .nav > li > a > i { display: block;}
+.nav-primary > .nav > li > a { text-align: center;}
+#nav { width: 100px}
+
+#demos section {overflow: hidden;}
+.sortable.grid {width: 660px;-webkit-user-select: none;-moz-user-select: none;  -ms-user-select: none; user-select: none;}
+.sortable.grid { padding: 0; overflow: hidden;}
+.sortable.grid li {list-style: none;border: 1px solid #CCC;background: #F6F6F6;color: #1C94C4;margin: 5px;padding: 5px;height: 22px;}
+.sortable.grid li {line-height: 100px;float: left;width: 112px; height: 112px;text-align: center;cursor: pointer;}
+.sortable.grid li img {vertical-align: middle; width: auto; height: auto; max-width: 100px; max-height: 100px; text-align: center;}
+.handle {cursor: move;}
+.sortable.connected {width: 200px;min-height: 100px;float: left;}
+li.disabled { opacity: 0.5;}
+li.highlight {background: #FEE25F;}
+li.sortable-placeholder {border: 1px dashed #CCC;background: none;}
+.remove { position: absolute; top: -7px;right:-5px}
+.link { position: absolute; top: -5px;right:20px}
+
+.uploadifive-button {border:0; color: #fff !important; background: #aeb6cb; border-color: #aeb6cb;padding: 5px 10px; font-size: 12px;text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; line-height: 1.5; border-radius: 3px; height: 30px !important; line-height: 22px!important; width:122px!important;}
+.uploadifive-button:hover {background-color: #95a0bb; border-color: #8994b3;}
+
+input[type="file"] {
+    margin: 0 0 16px -8px;
+    display: block;
+    left: 0 !important;
+    height: 26px;
+    top: 0 !important;}
+#SortableImage { margin-top: 20px;}
+#SortableWorker { margin-top: 20px;}
+.nav-bar.b-b { border-bottom: 1px solid #fff; background: #ffffff}
+
+ul.files { }
+ul.files li  select { width: auto; margin: 0 10px 0 0;display: inline-block;}
+ul.files li { list-style: none; padding: 10px 0; border-bottom:1px solid #eee; clear: both; height: 56px;}
+ul.files li .form-group { float: left; width: 40%;}
+ul.files li .form-group .col-sm-2 { width: 50%;}
+ul.files li .form-group .col-sm-3 { width: 50%;}
+.remove-file { float: right;}
