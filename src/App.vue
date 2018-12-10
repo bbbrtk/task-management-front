@@ -54,6 +54,11 @@
       </b-row>
     </b-container>
     <router-view/>
+    <b-container fluid class="p-3 bg-dark myFooter">
+        <b-col >
+          <h2>REALISED BY <b-badge variant="info">BAJA group</b-badge></h2>
+        </b-col>
+    </b-container>
   </div>
 </template>
 
@@ -79,6 +84,11 @@ import axios from "axios";
 
 .my-sweeties{
     max-height: 250px !important;
+}
+
+.myFooter{
+  margin-top: 60px;
+  color: bisque
 }
 
 </style>

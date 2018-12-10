@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/login'
+import NewUser from '@/components/newUser'
 
 Vue.use(Router)
 
