@@ -72,7 +72,11 @@ module.exports = {
           'css-loader',
           'sass-loader'
         ]
-      }
+      },
+      {
+        test: /\.svg$/,
+        loader: 'vue-svg-loader', // `vue-svg` for webpack 1.x
+       }
     ]
   },
   node: {

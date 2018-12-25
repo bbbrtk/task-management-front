@@ -21,20 +21,14 @@
             <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
 
-          <b-nav-item-dropdown text="Lang" right>
-            <b-dropdown-item href="#">EN</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
-          </b-nav-item-dropdown>
-
           <b-nav-item-dropdown right>
             <!-- Using button-content slot -->
             <template slot="button-content">
-              <em>User</em>
+              <em v-if="this.username.length > 0">{{this.username}}</em>
+              <em v-else>User</em>
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Signout</b-dropdown-item>
+            <b-dropdown-item @click.stop="logout()">Signout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
@@ -53,7 +47,15 @@
           </b-col>
       </b-row>
     </b-container>
-    <router-view/>
+
+    <div v-if="this.username.length > 0">
+      <router-view/>
+    </div>
+    <div v-else>
+      <Login/>
+    </div>
+    
+    
     <b-container fluid class="p-3 bg-dark myFooter">
         <b-col >
           <h2>REALISED BY <b-badge variant="info">BAJA group</b-badge></h2>
@@ -64,11 +66,35 @@
 
 <script>
 import axios from "axios";
+import Login from './components/login.vue';
 
   export default {
     name: 'App',
-    mounted() {},
-    methods: {}
+   data() {
+        return {
+            username: ''
+        }
+    },
+    mounted() {
+       if (localStorage.username) {
+          this.username = localStorage.username;
+
+      }else{
+        localStorage.username = "";
+      }
+    },
+     watch: {
+        username(newName) {
+          localStorage.username = newName;
+        }
+    }, 
+    methods: {
+      logout(){
+        this.username = "";
+        localStorage.username = "";
+      },
+    },
+    components : {Login}
   }
 
 </script>
