@@ -54,11 +54,13 @@ import { delay } from 'q';
             // axios.defaults.headers.get['Access-Control-Allow-Origin'] = true;
             axios.post('http://127.0.0.1:8081/users/auth', this.form.name)
                 .then(response => {
-                    if(response.data == 1){
+                    if(response.data){
                         // console.log("got it")
                         // this.$parent.login(this.form.name)
                         // this.$parent.localStorage.username = this.form.name;
                         this.$parent.username = this.form.name;
+                        const parsed = JSON.stringify(response.data);
+                        localStorage.user = parsed;
                     }
                     else{
                         console.log('duupsko');

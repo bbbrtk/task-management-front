@@ -1,15 +1,16 @@
 <template>
   <div id="app">
+    <div v-if="this.username.length > 0">
     <b-navbar toggleable="md" type="dark" variant="info">
 
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+      <b-navbar-brand >ProManage</b-navbar-brand>
 
       <b-collapse is-nav id="nav_collapse">
 
         <b-navbar-nav>
-          <b-nav-item href="#">Link</b-nav-item>
+          <b-nav-item @click.stop="redirect('home')">Home</b-nav-item>
           <b-nav-item href="#" disabled>Disabled</b-nav-item>
         </b-navbar-nav>
 
@@ -34,7 +35,7 @@
 
       </b-collapse>
     </b-navbar>
-    <b-container fluid class="p-4 bg-dark">
+    <!-- <b-container fluid class="p-4 bg-dark">
       <b-row>
           <b-col >
               <b-img class="my-sweeties" thumbnail fluid src="https://i.pinimg.com/originals/16/7d/12/167d12cd0f3a0e8aa1cc71c51ddab25f.jpg" alt="Thumbnail" />
@@ -46,9 +47,9 @@
               <b-img  class="my-sweeties" thumbnail fluid src="https://i.pinimg.com/originals/ec/a8/1b/eca81b36001c309cdacbcf1acbae33c3.jpg" alt="Thumbnail" />
           </b-col>
       </b-row>
-    </b-container>
+    </b-container> -->
 
-    <div v-if="this.username.length > 0">
+    
       <router-view/>
     </div>
     <div v-else>
@@ -72,7 +73,7 @@ import Login from './components/login.vue';
     name: 'App',
    data() {
         return {
-            username: ''
+            username: '',
         }
     },
     mounted() {
@@ -92,6 +93,10 @@ import Login from './components/login.vue';
       logout(){
         this.username = "";
         localStorage.username = "";
+        localStorage.user = null
+      },
+      redirect(path){
+          this.$router.push({ name: path})
       },
     },
     components : {Login}
