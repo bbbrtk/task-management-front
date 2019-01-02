@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <div v-if="this.username.length > 0">
+    <!-- tu jest warunek do logowania i wyswietlania glownego widoku -->
+    <div v-if="this.username.length > 0"> 
     <b-navbar toggleable="md" type="dark" variant="info">
 
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
@@ -11,7 +12,8 @@
 
         <b-navbar-nav>
           <b-nav-item @click.stop="redirect('home')">Home</b-nav-item>
-          <b-nav-item href="#" disabled>Disabled</b-nav-item>
+          <b-nav-item @click.stop="redirect('users')" >Users</b-nav-item>
+          <b-nav-item @click.stop="redirect('projects')" >Projects</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -52,6 +54,7 @@
     
       <router-view/>
     </div>
+    <!-- tu ten warunek sie konczy i jesli nie jest spelniony to wchodzi w ponizszego else'a. -->
     <div v-else>
       <Login/>
     </div>
