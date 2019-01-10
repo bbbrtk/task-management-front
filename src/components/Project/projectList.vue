@@ -19,25 +19,50 @@
                             Edit
                         </b-button>
                     </template>
-                        <!-- <template slot="name" slot-scope="data">
-                            <a :href="`${data.value.replace(/[^a-z]+/i,'-').toLowerCase()}`">
-                                {{data.value}}
-                            </a>
-                        </template> -->
                     <template slot="row-details" slot-scope="row">
                         <b-card>
-                            <b-row class="mb-2">
-                                <b-col sm="3" class="text-sm-right"><b>Name:</b></b-col>
-                                <b-col>{{ row.item.id }}</b-col>
+                            <b-row class="mb-2" align-h="end">
+                                       <b-button variant="success" @click="redirect('newTask')">New Task</b-button>
+                            </b-row>
+                            <b-row>
+                                <table id="firstTable" width=100%>
+                                <thead>
+                                    <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>State</th>
+                                    <th>User</th>
+                                    <th>Attachment</th>
+                                    <th>Deadline</th>
+                                    <th> Actions </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="iter in info" :key="iter">
+                                    <template v-if="iter.myProject.id === row.item.id">
+                                    <td>{{iter.id}}</td>
+                                    <td>{{iter.name}}</td>
+                                    <td>{{iter.state}}</td>
+                                    <!-- <td>{{iter.myUser.name}}</td> -->
+                                    <td>{{iter.myUser}}</td>
+                                    <td>{{iter.attachment}}</td>
+                                    <td>{{iter.deadline}}</td>
+                                    <td> 
+                                        <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
+                                            Delete
+                                        </b-button>
+                                        <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
+                                            Edit
+                                        </b-button>
+                                    </td>
+                                    </template>
+                                    </tr>
+                                </tbody>
+                                </table>
                             </b-row>
                         </b-card>
                     </template>
                 </b-table>
-                
-                <!-- <template>
-                    <b-table striped hover :items="items"></b-table>
-                </template> -->
-
             </b-row>
 
         </div>
@@ -60,6 +85,7 @@ export default {
     data() {
         return {
             role : null,
+            info : null,
             items : [],
             tasks : [],
             fields: [
@@ -130,29 +156,24 @@ export default {
                     this.errors.push(e)
             });
         },
-        listAllTasks(){
-            //axios.get('http://127.0.0.1:8081/managers/' + id + '/home-card')
-            axios.get('http://127.0.0.1:8081/projects')
-                .then(response => {
-                    this.tasks = response.data;
-                })
+        listAllTasksForProject(projectId){
+            axios.get('http://127.0.0.1:8081/projects/' + projectId + '/tasks')
+                .then(response => {this.info = response.data; } )
                 .catch(e => {
                     this.errors.push(e)
             });
-        }
+        },
     },
     beforeMount(){
         const user = JSON.parse(localStorage.user)
         console.log(user.dtype)
         this.listAllProjects(user.id);
-        this.listAllTasks();
+        this.listAllTasksForProject(3);
     }
 }
 
 </script>
 
 <style>
-
-
 </style>
 
