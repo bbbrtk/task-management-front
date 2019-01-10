@@ -2,28 +2,33 @@
     <div id="projects">
         <div class="container">
             <b-row align-h="end">
+                <template v-if="userData.dtype === 'Manager'">
                 <b-button variant="success" @click="redirect('newProject')">New Project</b-button>
+                </template>
             </b-row>
             
             <b-row>
                 <b-table bordered striped hover :items="items" :fields="fields">
                     <template slot="actions" slot-scope="row">
-
-                        <b-button size="sm" @click.stop="row.toggleDetails">
-                            {{ row.detailsShowing ? 'Hide' : 'Show' }} Tasks
-                        </b-button>
-                        <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
-                            Delete
-                        </b-button>
-                        <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
-                            Edit
-                        </b-button>
+                            <b-button size="sm" @click.stop="row.toggleDetails">
+                                {{ row.detailsShowing ? 'Hide' : 'Show' }} Tasks
+                            </b-button>
+                            <template v-if="userData.dtype === 'Manager'">
+                                <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
+                                    Delete
+                                </b-button>
+                                <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
+                                    Edit
+                                </b-button>
+                        </template>
                     </template>
                     <template slot="row-details" slot-scope="row">
                         <b-card>
+                            <template v-if="userData.dtype === 'Manager'">
                             <b-row class="mb-2" align-h="end">
                                        <b-button variant="success" @click="redirectTask('newTask')">New Task</b-button>
                             </b-row>
+                            </template>
                             <b-row>
                                 <table id="firstTable" width=100%>
                                 <thead>
@@ -35,43 +40,29 @@
                                     <th>Attachment</th>
                                     <th>Deadline</th>
                                     <th> Actions </th>
-                                    <th> Other </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="iter in info" :key="iter">
                                     <template v-if="iter.myProject.id === row.item.id">
-                                        
-                                    <td>{{iter.id}}</td>
-                                    <td>{{iter.name}}</td>
-                                    <td>{{iter.state}}</td>
-                                    <!-- <td>{{iter.myUser.name}}</td> -->
-                                    <td>{{iter.myUser}}</td>
-                                    <td>{{iter.attachment}}</td>
-                                    <td>{{iter.deadline}}</td>
-                                    <td> 
-                                        <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
-                                            Delete
-                                        </b-button>
-                                        <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
-                                            Edit
-                                        </b-button>
-                                    </td>
-                                    <!-- <td> costam </td> -->
-
-                                    <!-- <template v-if="iter.dtype === 'Email'">
-                                        <td>email</td>
-                                    </template> -->
-                                    <!-- <template v-if="user.dtype === 'Developer'">
-                                        <td>Developer</td>
+                                        <td>{{iter.id}}</td>
+                                        <td>{{iter.name}}</td>
+                                        <td>{{iter.state}}</td>
+                                        <!-- <td>{{iter.myUser.name}}</td> -->
+                                        <td>{{iter.myUser}}</td>
+                                        <td>{{iter.attachment}}</td>
+                                        <td>{{iter.deadline}}</td>
+                                            <template v-if="userData.dtype === 'Manager'">
+                                                <td> 
+                                                    <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
+                                                        Delete
+                                                    </b-button>
+                                                    <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
+                                                        Edit
+                                                    </b-button>
+                                                </td>
+                                            </template>
                                     </template>
-                                    <template v-if="user.dtype === 'Customer'">
-                                        <td>Customer</td>
-                                    </template> -->
-
-                                    </template>
-
-
                                     </tr>
                                 </tbody>
                                 </table>
@@ -79,15 +70,17 @@
                         </b-card>
                     </template>
                 </b-table>
+                                                <!-- {{userData}} -->
             </b-row>
-{{info}}
         </div>
         <b-modal id="modalInfo" @hide="resetModal(modalInfo)" :title="modalInfo.title" ok-only>
             <pre>{{ modalInfo.content }}</pre>
         </b-modal>
         <b-modal id="modalRemoveProject" hide-footer @hide="resetModal(modalRemoveProject)" :title="modalRemoveProject.title">
+            <template v-if="userData.dtype === 'Manager'">
             <pre> Your project: <strong>{{ modalRemoveProject.content.name }}</strong> will be deleted</pre>
             <b-btn class="mt-3" variant="outline-danger" block @click="deleteProject(modalRemoveProject.content.id)">DELETE</b-btn>
+            </template>
         </b-modal>
     </div>
 </template>
@@ -102,6 +95,7 @@ export default {
         return {
             role : null,
             info : null,
+            userData : null,
             items : [],
             tasks : [],
             fields: [
@@ -175,6 +169,16 @@ export default {
                     this.errors.push(e)
             });
         },
+        listAllProjectsCustomer(id){
+            axios.get('http://127.0.0.1:8081/projects/client-' + id)
+                .then(response => {
+                    this.items = response.data;
+                })
+                .catch(e => {
+                    this.errors.push(e)
+            });
+        },
+
         listAllTasksForProject(projectId){
             axios.get('http://127.0.0.1:8081/projects/' + projectId + '/tasks')
                 .then(response => {this.info = response.data; } )
@@ -185,9 +189,24 @@ export default {
     },
     beforeMount(){
         const user = JSON.parse(localStorage.user)
+        this.userData = JSON.parse(localStorage.user)
         console.log(user.dtype)
-        this.listAllProjects(user.id);
+        //this.listAllProjects(user);
         this.listAllTasksForProject(3);
+        switch(user.dtype){
+            case 'Manager':
+                this.listAllProjects(user.id);
+                break;
+            case 'Developer':
+                //this.listAllProjectsDeveloper(user.id);
+                break;
+            case 'Customer':
+                this.listAllProjectsCustomer(user.myClient.id);
+                break;
+            default:
+                console.log("error")
+                break;
+        }
     }
 }
 

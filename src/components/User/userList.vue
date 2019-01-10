@@ -1,35 +1,51 @@
 <template>
     <div id="userList">
         <div class="container">
+            <template v-if="userData.dtype === 'Manager'">
             <b-row align-h="end">
                 <b-button variant="success" @click="redirect('newUser')" >New User</b-button>
             </b-row>
-            
+            </template>
             <b-row>
                 <b-table bordered striped hover :items="items" :fields="fields">
                     <template slot="actions" slot-scope="row">
-                        <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
                         <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
                         More
                         </b-button>
+                        <template v-if="userData.dtype === 'Manager'">
                         <b-button size="sm" @click.stop="removeUserModalShow(row.item, row.index, $event.target)" class="mr-1">
                         Delete
                         </b-button>
                         <b-button size="sm" @click.stop="removeUserModalShow(row.item, row.index, $event.target)" class="mr-1">
                         Edit
                         </b-button>
-                        
-                        <!-- <b-button size="sm" @click.stop="row.toggleDetails">
-                        {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
-                        </b-button> -->
+                        </template>
                     </template>
                 </b-table>
             </b-row>
             
         </div>
         <b-modal id="modalInfo" @hide="resetModal(modalInfo)" :title="modalInfo.title" ok-only>
-            <pre>{{ modalInfo.content }}</pre>
-        </b-modal>
+            <table id="firstTable" width=100% align='left'>
+            <tr> <td> ID: </td><td>{{modalInfo.content.id}} </td></tr>
+            <tr> <td>Name: </td><td>{{modalInfo.content.name}} {{modalInfo.content.forename}}</td></tr>
+            <tr> <td>Type: </td><td>{{modalInfo.content.dtype}} </td></tr>
+            <tr> <td>Email: </td><td>{{modalInfo.content.email}} </td></tr>
+            <template v-if="userData.dtype === 'Manager'"> 
+            <tr> <td>Certificate: </td><td>{{modalInfo.content.certificate}} </td></tr>
+            </template>
+            <template v-if="userData.dtype === 'Developer'"> 
+            <tr> <td>Job: </td><td>{{modalInfo.content.type}} </td></tr>
+            <tr> <td>Info: </td><td>{{modalInfo.content.info}} </td></tr>
+            <tr> <td>Rating: </td><td>{{modalInfo.content.rating}} </td></tr>
+            <!-- <tr> Manager: {{modalInfo.content.myManager.name}} </tr> -->
+            </template>
+            <template v-if="userData.dtype === 'Customer'"> 
+            <tr> <td>C-type: </td><td>{{modalInfo.content.type}} </td></tr>
+            <tr> <td>Info: </td><td>{{modalInfo.content.info}} </td></tr>
+            </template>
+            </table>
+            </b-modal>
         <b-modal id="modalRemoveUser" hide-footer @hide="resetModal(modalRemoveUser)" :title="modalRemoveUser.title">
             <pre>Are you sure ?? <strong>{{ modalRemoveUser.content.name }}</strong> be sad</pre>
             <b-btn class="mt-3" variant="outline-danger" block @click="deleteUser(modalRemoveUser.content.id)">DELETE</b-btn>
@@ -48,6 +64,7 @@ export default {
     name: 'userList',
     data() {
         return {
+            userData : null,
             items: [],
             fields : [
                     {
@@ -90,7 +107,8 @@ export default {
         },
         info (item, index, button) {
             this.modalInfo.title = `Row index: ${index}`
-            this.modalInfo.content = JSON.stringify(item, null, 2)
+            this.modalInfo.ats = JSON.stringify(item, null, 2)
+            this.modalInfo.content = item
             this.$root.$emit('bv::show::modal', 'modalInfo', button)
             this.show = true;
         },
@@ -131,6 +149,9 @@ export default {
         }
     },
     beforeMount(){
+        const user = JSON.parse(localStorage.user)
+        this.userData = JSON.parse(localStorage.user)
+        console.log(user.dtype)
         this.listAllUsers();
     }
 }
