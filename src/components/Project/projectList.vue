@@ -22,7 +22,7 @@
                     <template slot="row-details" slot-scope="row">
                         <b-card>
                             <b-row class="mb-2" align-h="end">
-                                       <b-button variant="success" @click="redirect('newTask')">New Task</b-button>
+                                       <b-button variant="success" @click="redirectTask('newTask')">New Task</b-button>
                             </b-row>
                             <b-row>
                                 <table id="firstTable" width=100%>
@@ -35,11 +35,13 @@
                                     <th>Attachment</th>
                                     <th>Deadline</th>
                                     <th> Actions </th>
+                                    <th> Other </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="iter in info" :key="iter">
                                     <template v-if="iter.myProject.id === row.item.id">
+                                        
                                     <td>{{iter.id}}</td>
                                     <td>{{iter.name}}</td>
                                     <td>{{iter.state}}</td>
@@ -55,7 +57,21 @@
                                             Edit
                                         </b-button>
                                     </td>
+                                    <!-- <td> costam </td> -->
+
+                                    <!-- <template v-if="iter.dtype === 'Email'">
+                                        <td>email</td>
+                                    </template> -->
+                                    <!-- <template v-if="user.dtype === 'Developer'">
+                                        <td>Developer</td>
                                     </template>
+                                    <template v-if="user.dtype === 'Customer'">
+                                        <td>Customer</td>
+                                    </template> -->
+
+                                    </template>
+
+
                                     </tr>
                                 </tbody>
                                 </table>
@@ -64,7 +80,7 @@
                     </template>
                 </b-table>
             </b-row>
-
+{{info}}
         </div>
         <b-modal id="modalInfo" @hide="resetModal(modalInfo)" :title="modalInfo.title" ok-only>
             <pre>{{ modalInfo.content }}</pre>
@@ -139,6 +155,9 @@ export default {
         },
         redirect(path){
             this.$router.push({ name: 'newProject'})
+        },
+        redirectTask(path){
+            this.$router.push({ name: 'newTask'})
         },
         deleteProject(id){
             axios.delete('http://127.0.0.1:8081/projects/'+id)

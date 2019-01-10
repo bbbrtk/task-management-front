@@ -5,6 +5,7 @@ import Users from '@/components/User/userList'
 import Home from '@/components/home'
 import Projects from '@/components/Project/projectList'
 import newProject from '@/components/Project/newProject'
+import newTask from '@/components/Project/newTask'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/new-project',
       name: 'newProject',
       component: newProject
+    },
+    {
+      path: '/new-task',
+      name: 'newTask',
+      component: newTask
     }
     
   ]
