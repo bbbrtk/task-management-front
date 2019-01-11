@@ -1,5 +1,5 @@
 <template>
-    <div id="myTasks">
+    <div id="myTask">
         <div class="container">
             <b-card title="Card Title"
                     img-src="https://picsum.photos/600/300/?image=25"
@@ -50,7 +50,6 @@ export default {
                 axios.get('http://127.0.0.1:8081/managers/' + user.id + '/home-card')
                 .then(response => {
                     console.log(response.data);
-
                 })
                 .catch(e => {
                     this.errors.push(e)
@@ -58,6 +57,8 @@ export default {
 
                 break;
             case 'Developer':
+
+
                 break;
             case 'Customer':
                 break;
