@@ -86,7 +86,7 @@ export default {
             // axios.defaults.headers.get['Access-Control-Allow-Origin'] = true;
             axios.post('http://127.0.0.1:8081/'+ this.role, this.form)
                 .then(response => {
-                    console.log(response.data);
+                    //console.log(response.data);
                     this.$router.go(-1)
                 })
                 .catch(e => {

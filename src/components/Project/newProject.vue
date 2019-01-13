@@ -22,10 +22,10 @@
                                                     placeholder="Enter duration">
                         </b-form-input></b-col>
                     </b-row>
-                    <b-row>
+                    <!-- <b-row>
                         <b-col sm="2"><label >Client: </label></b-col>
                         <b-col sm="10"><b-form-select v-model="myClient" :options="items" class="mb-3" /></b-col>
-                    </b-row>
+                    </b-row> -->
                     <!-- <b-row>
                         <b-col sm="2"><label >Workers: </label></b-col>
                         <b-col sm="10"><b-form-select v-model="role" :options="roleOpt" class="mb-3" /></b-col>
@@ -52,7 +52,7 @@ export default {
     name: 'newProject',
     data() {
         const user = JSON.parse(localStorage.user)
-        console.log(user.dtype)
+        //console.log(user.dtype)
         return {
             items: [],
             clients: [],
@@ -63,21 +63,6 @@ export default {
             },
 
             myClient : null,
-            // team : null,
-
-            // teamOpt: [
-            //     { value: null, text: 'Please select an option', disabled : true },
-            //     { value: 'some', text: 'Please select an option1' },
-            //     { value: 'options', text: 'Please select an option2' },
-            //     { value: 'available', text: 'Please select an option420' },
-            // ], 
-
-            // roleOpt: [
-            //     { value: null, text: 'Please select an option', disabled : true },
-            //     { value: 'managers', text: 'Manager' },
-            //     { value: 'developers', text: 'Developer' },
-            //     { value: 'customers', text: 'Customer' },
-            // ]
         }
     }, 
     methods:{
@@ -89,7 +74,7 @@ export default {
             // axios.defaults.headers.get['Access-Control-Allow-Origin'] = true;
             axios.post('http://127.0.0.1:8081/projects', this.form)
                 .then(response => {
-                    console.log(response.data);
+                    //console.log(response.data);
                     this.$router.go(-1)
                 })
                 .catch(e => {
@@ -107,13 +92,6 @@ export default {
                 .catch(e => {
                     this.errors.push(e)
             });
-            // for (var x in this.items){
-            //     var hash = {};
-            //     hash["text"] = 1;  
-            //     hash["value"] = x;              
-            //     // var someRow = {text: "hello", value: x};
-            //     this.clients.push(hash);
-            // }
         }
     },
     beforeMount(){
