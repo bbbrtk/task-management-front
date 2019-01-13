@@ -1,17 +1,21 @@
 <template>
     <div id="myTeam">
         <div class="container">
-            <b-card title="Card Title"
-                    img-src="https://picsum.photos/600/300/?image=25"
+            <b-card title="Team"
+                    img-src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2Agnx?ver=d740"
                     img-alt="Image"
                     img-top
                     tag="article"
-                    style="max-width: 20rem;"
+                    style="max-width: 40rem; min-width: 20rem;"
                     class="mb-2">
+
                 <p class="card-text">
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+                View or manage your team! {{userData}}
                 </p>
-                <b-button href="#" variant="primary">Go somewhere</b-button>
+                <b-table bordered striped hover :items="items"> 
+                 </b-table>
+                 
+                <b-button href="#" variant="primary" @click="redirect('editTeam')">Manage your team</b-button>
             </b-card>
             
         </div>
@@ -26,7 +30,9 @@ export default {
     name: 'myTeam',
     data() {
         return {
+            items : [],
             role : null,
+            userData : null,
         }
     }, 
     methods:{
@@ -43,8 +49,22 @@ export default {
         onReset(){
 
         },
+        redirect(path){
+            this.$router.push({ name: path})
+        },
+        getMyTeam(id){
+            axios.get('http://127.0.0.1:8081/teams/' + id)
+                .then(response => {
+                    this.items = response.data;
+                })
+                .catch(e => {
+                    this.errors.push(e)
+            });
+        },
     },
     beforeMount(){
+        this.userData = JSON.parse(localStorage.user);
+        //this.getMyTeam(userData.myTeam.id);
     }
 }
 

@@ -6,6 +6,8 @@ import Home from '@/components/home'
 import Projects from '@/components/Project/projectList'
 import newProject from '@/components/Project/newProject'
 import newTask from '@/components/Project/newTask'
+import Teams from '@/components/Team/teamList'
+import newTeam from '@/components/Team/newTeam'
 
 Vue.use(Router)
 
@@ -38,10 +40,20 @@ export default new Router({
       component: newProject
     },
     {
-      path: '/new-task',
+      path: '/project/:projectId/new-task/',
       name: 'newTask',
       component: newTask
-    }
+    },
+    {
+      path: '/teams',
+      name: 'teams',
+      component: Teams
+    },
+    {
+      path: '/new-team',
+      name: 'newTeam',
+      component: newTeam
+    },
     
   ]
 })
