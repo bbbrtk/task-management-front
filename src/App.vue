@@ -15,7 +15,7 @@
           <b-nav-item @click.stop="redirect('users')" >Users</b-nav-item>
           <b-nav-item @click.stop="redirect('projects')" >Projects</b-nav-item>
           <b-nav-item @click.stop="redirect('teams')" >Teams</b-nav-item>
-          <b-nav-item @click.stop="redirect('companies')" >Copmanies</b-nav-item>
+          <b-nav-item @click.stop="redirect('companies')" >Companies</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

@@ -8,6 +8,7 @@ import newProject from '@/components/Project/newProject'
 import newTask from '@/components/Project/newTask'
 import Teams from '@/components/Team/teamList'
 import newTeam from '@/components/Team/newTeam'
+import Companies from '@/components/Company/companyList'
 
 Vue.use(Router)
 
@@ -53,6 +54,11 @@ export default new Router({
       path: '/new-team',
       name: 'newTeam',
       component: newTeam
+    },
+    {
+      path: '/companies',
+      name: 'companies',
+      component: Companies
     },
     
   ]
