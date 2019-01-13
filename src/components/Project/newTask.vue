@@ -23,22 +23,21 @@
                     <b-row>
                         <b-col sm="2"><label >State: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.state" 
-                                                    placeholder="Enter state">
+                                                    placeholder="Enter state number">
                         </b-form-input></b-col>
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Attachment: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.attachment" 
-                                                    placeholder="Enter attachment">
+                                                    placeholder="Enter attachment text">
                         </b-form-input></b-col>
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Deadline: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.deadline" 
-                                                    placeholder="Enter deadline in YYYY-MM-DD"> 
+                                                    placeholder="Enter deadline in YYYY-MM-DD format"> 
                         </b-form-input></b-col>
-                    </b-row>   
-
+                    </b-row>
                 </b-container>
                     <b-button type="submit" variant="primary">Submit</b-button>
                     <b-button type="reset" variant="danger">Reset</b-button>
@@ -55,8 +54,8 @@ import axios from 'axios';
 export default {
     name: 'newTask',
     data() {
-        const user = JSON.parse(localStorage.user)
-        console.log(user.dtype)
+        const user = JSON.parse(localStorage.user);
+        const project = JSON.parse(localStorage.project);
         return {
             form: {
                 name: '',
@@ -64,7 +63,7 @@ export default {
                 attachment: '',
                 deadline: '',
                 //myUser: user,
-                //myProject: 
+                //myProject: project,
             },
 
             dtype : null,
@@ -95,8 +94,18 @@ export default {
         },
         onReset(){
         },
+        // getProject(id){
+        //     axios.get('http://127.0.0.1:8081/projects/' + id)
+        //         .then(response => {
+        //             this.selectedProject = response.data;
+        //         })
+        //         .catch(e => {
+        //             this.errors.push(e)
+        //     });
+        // },
     },
     beforeMount(){
+        //this.getProject(project.id);
     }
 }
 
