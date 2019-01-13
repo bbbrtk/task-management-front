@@ -13,15 +13,15 @@
                     <b-row>
                         <b-col sm="2"><label >Name: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.name" 
-                                                    placeholder="Enter your name">
+                                                    placeholder="Enter team name">
                         </b-form-input></b-col>
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Capacity: </label></b-col>
-                        <b-col sm="10"><b-form-input v-model="form.forename" 
-                                                    placeholder="Enter your forname">
+                        <b-col sm="10"><b-form-input v-model="form.capacity" 
+                                                    placeholder="Enter team capacity">
                         </b-form-input></b-col>
-                    </b-row>         
+                    </b-row>    
                 </b-container>
                     <b-button type="submit" variant="primary">Submit</b-button>
                     <b-button type="reset" variant="danger">Reset</b-button>
@@ -39,12 +39,13 @@ import axios from 'axios';
 export default {
     name: 'newTeam',
     data() {
+        const user = JSON.parse(localStorage.user);
         return {
             userData : null,
             form: {
                 name: '',
                 capacity: '',
-                // myCompany: userData.myTeam.myCompany,
+                //myCompany: user.myTeam.myCompany,
             },
         }
     }, 
