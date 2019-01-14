@@ -26,7 +26,7 @@
                         <b-card>
                             <template v-if="userData.dtype === 'Manager'">
                             <b-row class="mb-2" align-h="end">
-                                       <b-button variant="success" @click="redirectTask('newTask')">New Task</b-button>
+                                       <b-button variant="success" @click="redirectTask('newTask',row.item.id, row.item)">New Task</b-button>
                             </b-row>
                             </template>
                             <b-row>
@@ -56,9 +56,6 @@
                                                 <td> 
                                                     <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
                                                         Delete
-                                                    </b-button>
-                                                    <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
-                                                        Edit
                                                     </b-button>
                                                 </td>
                                             </template>
@@ -128,7 +125,7 @@ export default {
         onSubmit(){
             axios.post('http://127.0.0.1:8081/'+ this.role, this.form)
                 .then(response => {
-                    console.log(response.data);
+                    //console.log(response.data);
                     this.$router.go(-1)
                 })
                 .catch(e => {
@@ -150,8 +147,9 @@ export default {
         redirect(path){
             this.$router.push({ name: 'newProject'})
         },
-        redirectTask(path){
-            this.$router.push({ name: 'newTask'})
+        redirectTask(path, id_project, the_project){
+            localStorage.project = JSON.stringify(the_project);
+            this.$router.push({ name: path, params: {projectId : id_project}})
         },
         deleteProject(id){
             axios.delete('http://127.0.0.1:8081/projects/'+id)
@@ -190,7 +188,7 @@ export default {
     beforeMount(){
         const user = JSON.parse(localStorage.user)
         this.userData = JSON.parse(localStorage.user)
-        console.log(user.dtype)
+        //console.log(user.dtype)
         //this.listAllProjects(user);
         this.listAllTasksForProject(3);
         switch(user.dtype){

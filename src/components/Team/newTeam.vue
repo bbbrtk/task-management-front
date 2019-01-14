@@ -1,8 +1,8 @@
 <template>
-    <div id="newUser">
+    <div id="newTeam">
         <div class="container">
             <b-card border-variant="secondary"
-                    header="Create new Project"
+                    header="Create new Team"
                     header-bg-variant="secondary"
                     align="center"
                     id = "myCard">
@@ -13,33 +13,21 @@
                     <b-row>
                         <b-col sm="2"><label >Name: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.name" 
-                                                    placeholder="Enter project name">
+                                                    placeholder="Enter team name">
                         </b-form-input></b-col>
                     </b-row>
                     <b-row>
-                        <b-col sm="2"><label >Duration: </label></b-col>
-                        <b-col sm="10"><b-form-input v-model="form.duration" 
-                                                    placeholder="Enter duration">
+                        <b-col sm="2"><label >Capacity: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.capacity" 
+                                                    placeholder="Enter team capacity">
                         </b-form-input></b-col>
-                    </b-row>
-                    <!-- <b-row>
-                        <b-col sm="2"><label >Client: </label></b-col>
-                        <b-col sm="10"><b-form-select v-model="myClient" :options="items" class="mb-3" /></b-col>
-                    </b-row> -->
-                    <!-- <b-row>
-                        <b-col sm="2"><label >Workers: </label></b-col>
-                        <b-col sm="10"><b-form-select v-model="role" :options="roleOpt" class="mb-3" /></b-col>
-                    </b-row> -->
-                    
+                    </b-row>    
                 </b-container>
-
-                <template>
-                    <b-table striped hover :items="items"></b-table>
-                </template>
                     <b-button type="submit" variant="primary">Submit</b-button>
                     <b-button type="reset" variant="danger">Reset</b-button>
                 </b-form>
-            </b-card>            
+            </b-card>
+            
         </div>
     </div>
 </template>
@@ -49,20 +37,16 @@
 import axios from 'axios';
 
 export default {
-    name: 'newProject',
+    name: 'newTeam',
     data() {
-        const user = JSON.parse(localStorage.user)
-        //console.log(user.dtype)
+        const user = JSON.parse(localStorage.user);
         return {
-            items: [],
-            clients: [],
+            userData : null,
             form: {
-                duration: '',
                 name: '',
-                myManager: user,
+                capacity: '',
+                //myCompany: user.myTeam.myCompany,
             },
-
-            myClient : null,
         }
     }, 
     methods:{
@@ -72,7 +56,7 @@ export default {
                 'Access-Control-Allow-Origin' : '*',
             }
             // axios.defaults.headers.get['Access-Control-Allow-Origin'] = true;
-            axios.post('http://127.0.0.1:8081/projects', this.form)
+            axios.post('http://127.0.0.1:8081/teams', this.form)
                 .then(response => {
                     //console.log(response.data);
                     this.$router.go(-1)
@@ -84,18 +68,9 @@ export default {
         onReset(){
 
         },
-        listAllClients(){
-            axios.get('http://127.0.0.1:8081/clients')
-                .then(response => {
-                    this.items = response.data;
-                })
-                .catch(e => {
-                    this.errors.push(e)
-            });
-        }
     },
     beforeMount(){
-        this.listAllClients();
+        this.userData = JSON.parse(localStorage.user);
     }
 }
 

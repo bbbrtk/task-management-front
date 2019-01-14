@@ -1,21 +1,19 @@
 <template>
-    <div id="myTeam">
+    <div id="myProjects">
         <div class="container">
-            <b-card title="Team"
+            <b-card title="Projects"
                     img-src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE2Agnx?ver=d740"
                     img-alt="Image"
                     img-top
                     tag="article"
                     style="max-width: 40rem; min-width: 20rem;"
                     class="mb-2">
-
-                <p class="card-text">
-                View or manage your team! {{userData}}
-                </p>
-                <b-table bordered striped hover :items="items"> 
+                <b-table bordered striped hover :items="items" :fields="fields"> 
                  </b-table>
-                 
-                <b-button href="#" variant="primary" @click="redirect('editTeam')">Manage your team</b-button>
+                <p class="card-text">
+                View or manage your projects!
+                </p>
+                <b-button href="#" variant="primary">Go to projects list</b-button>
             </b-card>
             
         </div>
@@ -27,12 +25,10 @@
 import axios from 'axios';
 
 export default {
-    name: 'myTeam',
+    name: 'myProjects',
     data() {
         return {
-            items : [],
             role : null,
-            userData : null,
         }
     }, 
     methods:{
@@ -49,22 +45,8 @@ export default {
         onReset(){
 
         },
-        redirect(path){
-            this.$router.push({ name: path})
-        },
-        getMyTeam(id){
-            axios.get('http://127.0.0.1:8081/teams/' + id)
-                .then(response => {
-                    this.items = response.data;
-                })
-                .catch(e => {
-                    this.errors.push(e)
-            });
-        },
     },
     beforeMount(){
-        this.userData = JSON.parse(localStorage.user);
-        //this.getMyTeam(userData.myTeam.id);
     }
 }
 

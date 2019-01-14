@@ -8,6 +8,9 @@
                 <b-col>
                     <myTeam class="myHomeCard"/>
                 </b-col>
+                <!-- <b-col>
+                    <myProjects class="myHomeCard"/>
+                </b-col> -->
             </b-row>
         </div>
     </div>
@@ -18,6 +21,7 @@
 import axios from 'axios';
 import myTasks from '@/components/Home/myTasks'
 import myTeam from '@/components/Home/myTeam'
+// import myProjects from '@/components/Home/myProjects'
 
 export default {
     name: 'home',
