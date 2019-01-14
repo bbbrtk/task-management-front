@@ -10,6 +10,8 @@ import newTask from '@/components/Project/newTask'
 import Teams from '@/components/Team/teamList'
 import newTeam from '@/components/Team/newTeam'
 import Companies from '@/components/Company/companyList'
+import Clients from '@/components/Client/clientList'
+import newClient from '@/components/Client/newClient'
 
 Vue.use(Router)
 
@@ -65,6 +67,16 @@ export default new Router({
       path: '/companies',
       name: 'companies',
       component: Companies
+    },
+    {
+      path: '/clients',
+      name: 'clients',
+      component: Clients
+    },
+    {
+      path: '/new-client',
+      name: 'newClient',
+      component: newClient
     },
     
   ]
