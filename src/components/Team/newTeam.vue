@@ -45,7 +45,7 @@ export default {
             form: {
                 name: '',
                 capacity: '',
-                //myCompany: user.myTeam.myCompany,
+                myCompany: userData.myTeam.myCompany,
             },
         }
     }, 

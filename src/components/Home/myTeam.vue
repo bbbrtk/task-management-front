@@ -10,7 +10,11 @@
                     class="mb-2">
 
                 <p class="card-text">
-                View or manage your team! {{userData}}
+                View or manage your team! 
+                </p>
+
+                <p class="card-text">
+               {{userData.myTeam}}
                 </p>
                 <b-table bordered striped hover :items="items"> 
                  </b-table>
