@@ -34,7 +34,7 @@
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Deadline: </label></b-col>
-                        <b-col sm="10"><b-form-input v-model="form.deadline" 
+                        <b-col sm="10"><b-form-input type='date' v-model="form.deadline" 
                                                     placeholder="Enter deadline in YYYY-MM-DD format"> 
                         </b-form-input></b-col>
                     </b-row>
