@@ -151,7 +151,7 @@ export default {
     beforeMount(){
         const user = JSON.parse(localStorage.user)
         this.userData = JSON.parse(localStorage.user)
-        console.log(user.dtype)
+        //console.log(user.dtype)
         this.listAllUsers();
     }
 }

@@ -63,7 +63,7 @@ import { delay } from 'q';
                         localStorage.user = parsed;
                     }
                     else{
-                        console.log('duupsko');
+                        console.log('error');
                     }
                 })
                 .catch(e => {
