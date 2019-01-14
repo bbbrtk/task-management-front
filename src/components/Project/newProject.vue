@@ -24,7 +24,7 @@
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Client: </label></b-col>
-                        <b-col sm="10"><b-form-select v-model="myClient" :options="items" class="mb-3" /></b-col>
+                        <b-col sm="10"><b-form-select v-model="form.myClient" :options="clientOpt" class="mb-3" /></b-col>
                     </b-row>
                     <!-- <b-row>
                         <b-col sm="2"><label >Workers: </label></b-col>
@@ -60,9 +60,9 @@ export default {
                 duration: '',
                 name: '',
                 myManager: user,
+                myClient: null,
             },
-
-            myClient : null,
+            clientOpt: [],
         }
     }, 
     methods:{
@@ -88,7 +88,10 @@ export default {
             axios.get('http://127.0.0.1:8081/clients')
                 .then(response => {
                     this.items = response.data;
-                    console.log(this.items);
+                    response.data.forEach(element => {
+                        this.clientOpt.push({value : element, text: element.name})
+                    });
+                    console.log(this.clientOpt)
                 })
                 .catch(e => {
                     this.errors.push(e)
@@ -97,6 +100,7 @@ export default {
     },
     beforeMount(){
         this.listAllClients();
+        
     }
 }
 

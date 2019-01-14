@@ -16,7 +16,7 @@
                         <b-button size="sm" @click.stop="removeUserModalShow(row.item, row.index, $event.target)" class="mr-1">
                         Delete
                         </b-button>
-                        <b-button size="sm" @click.stop="removeUserModalShow(row.item, row.index, $event.target)" class="mr-1">
+                        <b-button size="sm" @click="smartRedirect(row.item)" class="mr-1">
                         Edit
                         </b-button>
                         </template>
@@ -124,6 +124,22 @@ export default {
         },
         redirect(path){
             this.$router.push({ name: 'newUser'})
+        },
+        smartRedirect(row){
+            const user = JSON.parse(localStorage.user)
+            console.log(row)
+            switch(user.dtype){ 
+                case 'Manager':
+                
+                    break
+                case 'Developer':
+                    break
+                case 'Customer':
+                    break
+                default:
+                    console.log('Who are you? ' + user.dtype)
+
+            }
         },
         deleteUser(id){
             axios.delete('http://127.0.0.1:8081/users/'+id)
