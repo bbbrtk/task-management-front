@@ -12,13 +12,23 @@
                 <p class="card-text">
                 View or manage your team! 
                 </p>
-
                 <p class="card-text">
-               {{userData.myTeam}}
+                <table style="width:100%">
+                    <tr>
+                        <th>Name</th>
+                        <th>ID</th>
+                        <th>Company</th>
+                    </tr>
+                    <tr>
+                        <td>{{userData.myTeam.name}}</td>
+                        <td>{{userData.myTeam.id}}</td>
+                        <td>{{userData.myTeam.myCompany.name}}</td>
+                    </tr>
+                </table> 
                 </p>
-                <b-table bordered striped hover :items="items"> 
-                 </b-table>
-                 
+                <p class="card-text">
+                </p>
+                
                 <b-button href="#" variant="primary" @click="redirect('editTeam')">Manage your team</b-button>
             </b-card>
             
@@ -34,7 +44,6 @@ export default {
     name: 'myTeam',
     data() {
         return {
-            items : [],
             role : null,
             userData : null,
         }
@@ -75,7 +84,8 @@ export default {
 </script>
 
 <style>
-
+.card-text{
+    margin-top: 30px;
+}
 
 </style>
-

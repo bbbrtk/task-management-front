@@ -54,7 +54,7 @@
                                         <td>{{iter.deadline}}</td>
                                             <template v-if="userData.dtype === 'Manager'">
                                                 <td> 
-                                                    <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
+                                                    <b-button size="sm" @click.stop="removeTaskModalShow(row.item, row.index, $event.target)" class="mr-1">
                                                         Delete
                                                     </b-button>
                                                 </td>
@@ -77,6 +77,12 @@
             <template v-if="userData.dtype === 'Manager'">
             <pre> Your project: <strong>{{ modalRemoveProject.content.name }}</strong> will be deleted</pre>
             <b-btn class="mt-3" variant="outline-danger" block @click="deleteProject(modalRemoveProject.content.id)">DELETE</b-btn>
+            </template>
+        </b-modal>
+        <b-modal id="modalRemoveTask" hide-footer @hide="resetModal(modalRemoveTask)" :title="modalRemoveTask.title">
+            <template v-if="userData.dtype === 'Manager'">
+            <pre> Your task: <strong>{{ modalRemoveTask.content.name }}</strong> will be deleted</pre>
+            <b-btn class="mt-3" variant="outline-danger" block @click="deleteTask(modalRemoveTask.content.id)">DELETE</b-btn>
             </template>
         </b-modal>
     </div>
@@ -106,7 +112,7 @@ export default {
                     sortable: true
                 },
                 {
-                    key: "my_client_id",
+                    key: "myClient.name",
                     label:"Client",
                     sortable: true
                 },
@@ -118,7 +124,8 @@ export default {
             ],
 
             modalInfo: { title: '', content: '' },
-            modalRemoveProject: {title: 'Warning!', content: '', id:null}
+            modalRemoveProject: {title: 'Warning!', content: '', id:null},
+            modalRemoveTask: {title: 'Warning!', content: '', id:null}
         }
     }, 
     methods:{
@@ -140,6 +147,12 @@ export default {
             this.$root.$emit('bv::show::modal', 'modalRemoveProject', button)
             this.show = true;
         },
+        removeTaskModalShow(item, index, button){
+            this.modalRemoveTask.title = "Warning!"
+            this.modalRemoveTask.content = item
+            this.$root.$emit('bv::show::modal', 'modalRemoveTask', button)
+            this.show = true;
+        },
         resetModal (modal) {
             modal.title = ''
             modal.content = ''
@@ -153,6 +166,13 @@ export default {
         },
         deleteProject(id){
             axios.delete('http://127.0.0.1:8081/projects/'+id)
+            .then(this.$router.go())
+            .catch(e => {
+                this.errors.push(e)
+            });
+        },
+        deleteTask(id){
+            axios.delete('http://127.0.0.1:8081/tasks/'+id)
             .then(this.$router.go())
             .catch(e => {
                 this.errors.push(e)
@@ -176,7 +196,6 @@ export default {
                     this.errors.push(e)
             });
         },
-
         listAllTasksForProject(projectId){
             axios.get('http://127.0.0.1:8081/projects/' + projectId + '/tasks')
                 .then(response => {this.info = response.data; } )
@@ -188,8 +207,6 @@ export default {
     beforeMount(){
         const user = JSON.parse(localStorage.user)
         this.userData = JSON.parse(localStorage.user)
-        //console.log(user.dtype)
-        //this.listAllProjects(user);
         this.listAllTasksForProject(3);
         switch(user.dtype){
             case 'Manager':

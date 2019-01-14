@@ -22,6 +22,11 @@
                                                     placeholder="Enter team capacity">
                         </b-form-input></b-col>
                     </b-row>    
+                    <b-row>
+                        <b-col sm="2"><label >Company: </label></b-col>
+                        <b-col sm="10"><b-form-select v-model="form.myCompany" :options="clientOpt" class="mb-3" /></b-col>
+                    </b-row>
+                    {{curCompany}}
                 </b-container>
                     <b-button type="submit" variant="primary">Submit</b-button>
                     <b-button type="reset" variant="danger">Reset</b-button>
@@ -42,10 +47,11 @@ export default {
         const user = JSON.parse(localStorage.user);
         return {
             userData : null,
+            curCompany : null,
+            clientOpt : [],
             form: {
                 name: '',
                 capacity: '',
-                myCompany: userData.myTeam.myCompany,
             },
         }
     }, 
@@ -66,11 +72,23 @@ export default {
             });
         },
         onReset(){
-
         },
+        listThisCompany(){
+            axios.get('http://127.0.0.1:8081/companies')
+                .then(response => {
+                    this.items = response.data;
+                    response.data.forEach(element => {
+                        this.clientOpt.push({value : element, text: element.name})
+                    });
+                })
+                .catch(e => {
+                    this.errors.push(e)
+            });
+        }
     },
     beforeMount(){
         this.userData = JSON.parse(localStorage.user);
+        this.listThisCompany();
     }
 }
 

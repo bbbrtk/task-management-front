@@ -3,14 +3,11 @@
         <div class="container">
             <b-row>
                 <b-col>
-                    <myTasks class="myHomeCard"/> <!-- plan jest taki ze jezeli aktualny user jest developerem to widzi swoje taski posegregowane wedlug daty, jesli managerem to taski ze swojego teamu, jesli customerem to taski z projektu -->
+                    <myTasks class="myHomeCard"/> 
                 </b-col>
                 <b-col>
                     <myTeam class="myHomeCard"/>
                 </b-col>
-                <!-- <b-col>
-                    <myProjects class="myHomeCard"/>
-                </b-col> -->
             </b-row>
         </div>
     </div>
@@ -21,7 +18,6 @@
 import axios from 'axios';
 import myTasks from '@/components/Home/myTasks'
 import myTeam from '@/components/Home/myTeam'
-// import myProjects from '@/components/Home/myProjects'
 
 export default {
     name: 'home',

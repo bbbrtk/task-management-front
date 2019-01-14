@@ -30,7 +30,7 @@
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Team: </label></b-col>
-                        <b-col sm="10"><b-form-select v-model="team" :options="teamOpt" class="mb-3" /></b-col>
+                        <b-col sm="10"><b-form-select v-model="form.myTeam" :options="clientOpt" class="mb-3" /></b-col>
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Role: </label></b-col>
@@ -62,13 +62,7 @@ export default {
             },
             role : null,
             team : null,
-            teamOpt: [
-                { value: null, text: 'Please select an option', disabled : true },
-                { value: 'some', text: 'Please select an option1' },
-                { value: 'options', text: 'Please select an option2' },
-                { value: 'available', text: 'Please select an option420' },
-
-            ], 
+            clientOpt: [], 
             roleOpt: [
                 { value: null, text: 'Please select an option', disabled : true },
                 { value: 'managers', text: 'Manager' },
@@ -94,10 +88,23 @@ export default {
             });
         },
         onReset(){
-
         },
+        listAllTeams(){
+            axios.get('http://127.0.0.1:8081/teams')
+                .then(response => {
+                    this.items = response.data;
+                    response.data.forEach(element => {
+                        this.clientOpt.push({value : element, text: element.name})
+                    });
+                    console.log(this.clientOpt)
+                })
+                .catch(e => {
+                    this.errors.push(e)
+            });
+        }
     },
     beforeMount(){
+        this.listAllTeams();
     }
 }
 
