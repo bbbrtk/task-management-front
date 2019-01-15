@@ -43,7 +43,7 @@ export default {
                         sortable: true
                     },
                     {
-                        key:"myCompany.name",
+                        key:"myCompany",
                         label:"Company",
                         sortable: true
                     },

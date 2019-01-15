@@ -18,15 +18,7 @@
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Type: </label></b-col>
-                        <b-col sm="10"><b-form-select v-model="form.task_type" :options="dtypeOpt" class="mb-3" /></b-col>
-                    </b-row>
-                    <b-row>
-                        <b-col sm="2"><label >Project: </label></b-col>
-                        <b-col sm="10"><b-form-select v-model="form.myProject" :options="projectOpt" class="mb-3" /></b-col>
-                    </b-row>
-                    <b-row>
-                        <b-col sm="2"><label >User: </label></b-col>
-                        <b-col sm="10"><b-form-select v-model="form.myUser" :options="usersOpt" class="mb-3" /></b-col>
+                        <b-col sm="10"><b-form-select v-model="dtype" :options="dtypeOpt" class="mb-3" /></b-col>
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >State: </label></b-col>
@@ -42,7 +34,7 @@
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Deadline: </label></b-col>
-                        <b-col sm="10"><b-form-input v-model="form.deadline" 
+                        <b-col sm="10"><b-form-input type='date' v-model="form.deadline" 
                                                     placeholder="Enter deadline in YYYY-MM-DD format"> 
                         </b-form-input></b-col>
                     </b-row>
@@ -62,15 +54,16 @@ import axios from 'axios';
 export default {
     name: 'newTask',
     data() {
+        const user = JSON.parse(localStorage.user);
+        const project = JSON.parse(localStorage.project);
         return {
-            userData : null,
-            usersOpt : [],
-            projectOpt : [],
             form: {
                 name: '',
                 state: '',
                 attachment: '',
                 deadline: '',
+                //myUser: user,
+                //myProject: project,
             },
 
             dtype : null,
@@ -85,12 +78,12 @@ export default {
     }, 
     methods:{
         onSubmit(){
+            // this.form.team = null;
             let config = {
                 'Access-Control-Allow-Origin' : '*',
             }
-
-            //axios.post('http://127.0.0.1:8081/' + this.dtype, this.form)
-            axios.post('http://127.0.0.1:8081/users', this.form)
+            // axios.defaults.headers.get['Access-Control-Allow-Origin'] = true;
+            axios.post('http://127.0.0.1:8081/' + this.dtype, this.form)
                 .then(response => {
                     console.log(response.data);
                     this.$router.go(-1)
@@ -101,37 +94,18 @@ export default {
         },
         onReset(){
         },
-        listAllUsers(){
-            axios.get('http://127.0.0.1:8081/users')
-                .then(response => {
-                    this.items = response.data;
-                    response.data.forEach(element => {
-                        this.usersOpt.push({value : element, text: element.name})
-                    });
-                    console.log(this.clientOpt)
-                })
-                .catch(e => {
-                    this.errors.push(e)
-            });
-        },
-        listAllProjects(){
-            axios.get('http://127.0.0.1:8081/projects')
-                .then(response => {
-                    this.anotheritems = response.data;
-                    response.data.forEach(element => {
-                        this.projectOpt.push({value : element, text: element.name})
-                    });
-                    console.log(this.clientOpt)
-                })
-                .catch(e => {
-                    this.errors.push(e)
-            });
-        }
+        // getProject(id){
+        //     axios.get('http://127.0.0.1:8081/projects/' + id)
+        //         .then(response => {
+        //             this.selectedProject = response.data;
+        //         })
+        //         .catch(e => {
+        //             this.errors.push(e)
+        //     });
+        // },
     },
     beforeMount(){
-        this.userData = JSON.parse(localStorage.user);
-        this.listAllUsers();
-        this.listAllProjects();
+        //this.getProject(project.id);
     }
 }
 
