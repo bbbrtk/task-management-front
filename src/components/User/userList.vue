@@ -2,12 +2,24 @@
     <div id="userList">
         <div class="container">
             <template v-if="userData.dtype === 'Manager'">
-            <b-row align-h="end">
+            <b-row >
+                <b-col align-h="begin">
+                    <b-form-group horizontal label="Filter" class="mb-0">
+                    <b-input-group>
+                        <b-form-input v-model="filter" placeholder="Type to Search" />
+                        <b-input-group-append>
+                        <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
+                        </b-input-group-append>
+                    </b-input-group>
+                    </b-form-group>
+                </b-col>
+                <b-col align-h="end">
                 <b-button variant="success" @click="redirect('newUser')" >New User</b-button>
+                </b-col>
             </b-row>
             </template>
             <b-row>
-                <b-table bordered striped hover :items="items" :fields="fields">
+                <b-table bordered striped hover :items="items" :fields="fields" :filter="filter" >
                     <template slot="actions" slot-scope="row">
                         <b-button size="sm" @click.stop="info(row.item, row.index, $event.target)" class="mr-1">
                         More
@@ -65,7 +77,9 @@ export default {
     data() {
         return {
             userData : null,
+            filter : null,
             items: [],
+            //totalRows: items.length,
             fields : [
                     {
                         key:"name",
@@ -162,6 +176,10 @@ export default {
                 .catch(e => {
                     this.errors.push(e)
             });
+        },
+        onFiltered (filteredItems) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.totalRows = filteredItems.length;
         }
     },
     beforeMount(){

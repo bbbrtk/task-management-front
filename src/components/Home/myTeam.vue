@@ -16,9 +16,8 @@
                 <p class="card-text">
                {{userData.myTeam}}
                 </p>
-                <b-table bordered striped hover :items="items"> 
-                 </b-table>
-                 
+                <p class="card-text">
+                </p>
                 <b-button href="#" variant="primary" @click="redirect('editTeam')">Manage your team</b-button>
             </b-card>
             
@@ -43,7 +42,6 @@ export default {
         onSubmit(){
             axios.post('http://127.0.0.1:8081/'+ this.role, this.form)
                 .then(response => {
-                    console.log(response.data);
                     this.$router.go(-1)
                 })
                 .catch(e => {
