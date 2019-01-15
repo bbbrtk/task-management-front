@@ -1,14 +1,29 @@
 <template>
     <div id="projects">
         <div class="container">
-            <b-row align-h="end">
-                <template v-if="userData.dtype === 'Manager'">
-                <b-button variant="success" @click="redirect('newProject')">New Project</b-button>
-                </template>
+            <template v-if="userData.dtype === 'Manager'">
+                <b-row align-h="between">
+                    <b-col cols=5>
+                        <b-form-group horizontal label="Filter" class="mb-0">
+                        <b-input-group>
+                            <b-form-input v-model="filter" placeholder="Type to Search" />
+                            <b-input-group-append>
+                            <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
+                            </b-input-group-append>
+                        </b-input-group>
+                        </b-form-group>
+                    </b-col>
+                    <b-col cols=2>
+                        <b-button variant="success" @click="redirect('newProject')" >New Project</b-button>
+                    </b-col>
+                </b-row>
+            </template>
+            <b-row>
+                <p> </p>
             </b-row>
             
             <b-row>
-                <b-table bordered striped hover :items="items" :fields="fields">
+                <b-table bordered striped hover :items="items" :fields="fields" :filter="filter">
                     <template slot="actions" slot-scope="row">
                             <b-button size="sm" @click.stop="row.toggleDetails">
                                 {{ row.detailsShowing ? 'Hide' : 'Show' }} Tasks
@@ -93,6 +108,7 @@ export default {
             role : null,
             info : null,
             userData : null,
+            filter : null,
             items : [],
             tasks : [],
             fields: [
