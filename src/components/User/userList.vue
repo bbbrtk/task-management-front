@@ -126,20 +126,7 @@ export default {
             this.$router.push({ name: 'newUser'})
         },
         smartRedirect(row){
-            const user = JSON.parse(localStorage.user)
-            console.log(row)
-            switch(user.dtype){ 
-                case 'Manager':
-                
-                    break
-                case 'Developer':
-                    break
-                case 'Customer':
-                    break
-                default:
-                    console.log('Who are you? ' + user.dtype)
-
-            }
+            this.$router.push({name: 'editUser', params:{id: row.id} })
         },
         deleteUser(id){
             axios.delete('http://127.0.0.1:8081/users/'+id)

@@ -85,7 +85,7 @@ export default {
     beforeMount(){
         this.userData = JSON.parse(localStorage.user)
         //this.listAllTeams();
-        this.listAllTeamsInCompany(2);
+        this.listAllTeamsInCompany(this.userData.myTeam.myCompany.id);
 
     }
 }
