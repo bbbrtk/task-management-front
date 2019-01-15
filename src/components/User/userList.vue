@@ -150,7 +150,6 @@ export default {
             .then(this.$router.go())
             .catch(e => {
                 this.errors.push(e)
-                
             });
         },
         listAllUsers(){
