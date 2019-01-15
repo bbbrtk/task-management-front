@@ -28,10 +28,6 @@
                     </b-row>
                    
                 </b-container>
-
-                <template>
-                    <b-table striped hover :items="items"></b-table>
-                </template>
                     <b-button type="submit" variant="primary">Submit</b-button>
                     <b-button type="reset" variant="danger">Reset</b-button>
                 </b-form>
