@@ -2,8 +2,8 @@
     <div id="userList">
         <div class="container">
             <template v-if="userData.dtype === 'Manager'">
-            <b-row >
-                <b-col align-h="begin">
+            <b-row align-h="between">
+                <b-col cols=5>
                     <b-form-group horizontal label="Filter" class="mb-0">
                     <b-input-group>
                         <b-form-input v-model="filter" placeholder="Type to Search" />
@@ -13,11 +13,14 @@
                     </b-input-group>
                     </b-form-group>
                 </b-col>
-                <b-col align-h="end">
+                <b-col cols=2>
                 <b-button variant="success" @click="redirect('newUser')" >New User</b-button>
                 </b-col>
             </b-row>
             </template>
+            <b-row>
+                <p> </p>
+            </b-row>
             <b-row>
                 <b-table bordered striped hover :items="items" :fields="fields" :filter="filter" >
                     <template slot="actions" slot-scope="row">
@@ -147,7 +150,6 @@ export default {
             .then(this.$router.go())
             .catch(e => {
                 this.errors.push(e)
-                
             });
         },
         listAllUsers(){

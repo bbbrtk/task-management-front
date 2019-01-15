@@ -1,14 +1,29 @@
 <template>
     <div id="projects">
         <div class="container">
-            <b-row align-h="end">
-                <template v-if="userData.dtype === 'Manager'">
-                <b-button variant="success" @click="redirect('newProject')">New Project</b-button>
-                </template>
+            <template v-if="userData.dtype === 'Manager'">
+                <b-row align-h="between">
+                    <b-col cols=5>
+                        <b-form-group horizontal label="Filter" class="mb-0">
+                        <b-input-group>
+                            <b-form-input v-model="filter" placeholder="Type to Search" />
+                            <b-input-group-append>
+                            <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
+                            </b-input-group-append>
+                        </b-input-group>
+                        </b-form-group>
+                    </b-col>
+                    <b-col cols=2>
+                        <b-button variant="success" @click="redirect('newProject')" >New Project</b-button>
+                    </b-col>
+                </b-row>
+            </template>
+            <b-row>
+                <p> </p>
             </b-row>
             
             <b-row>
-                <b-table bordered striped hover :items="items" :fields="fields">
+                <b-table bordered striped hover :items="items" :fields="fields" :filter="filter">
                     <template slot="actions" slot-scope="row">
                             <b-button size="sm" @click.stop="row.toggleDetails">
                                 {{ row.detailsShowing ? 'Hide' : 'Show' }} Tasks
@@ -54,7 +69,7 @@
                                         <td>{{iter.deadline}}</td>
                                             <template v-if="userData.dtype === 'Manager'">
                                                 <td> 
-                                                    <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
+                                                    <b-button size="sm" @click.stop="removeTaskModalShow(row.item, row.index, $event.target)" class="mr-1">
                                                         Delete
                                                     </b-button>
                                                 </td>
@@ -79,6 +94,12 @@
             <b-btn class="mt-3" variant="outline-danger" block @click="deleteProject(modalRemoveProject.content.id)">DELETE</b-btn>
             </template>
         </b-modal>
+        <b-modal id="modalRemoveTask" hide-footer @hide="resetModal(modalRemoveTask)" :title="modalRemoveTask.title">
+            <template v-if="userData.dtype === 'Manager'">
+            <pre> Your task: <strong>{{ modalRemoveTask.content.name }}</strong> will be deleted</pre>
+            <b-btn class="mt-3" variant="outline-danger" block @click="deleteTask(modalRemoveTask.content.id)">DELETE</b-btn>
+            </template>
+        </b-modal>
     </div>
 </template>
 
@@ -93,6 +114,7 @@ export default {
             role : null,
             info : null,
             userData : null,
+            filter : null,
             items : [],
             tasks : [],
             fields: [
@@ -106,7 +128,7 @@ export default {
                     sortable: true
                 },
                 {
-                    key: "my_client_id",
+                    key: "myClient.name",
                     label:"Client",
                     sortable: true
                 },
@@ -118,7 +140,8 @@ export default {
             ],
 
             modalInfo: { title: '', content: '' },
-            modalRemoveProject: {title: 'Warning!', content: '', id:null}
+            modalRemoveProject: {title: 'Warning!', content: '', id:null},
+            modalRemoveTask: {title: 'Warning!', content: '', id:null}
         }
     }, 
     methods:{
@@ -140,6 +163,12 @@ export default {
             this.$root.$emit('bv::show::modal', 'modalRemoveProject', button)
             this.show = true;
         },
+        removeTaskModalShow(item, index, button){
+            this.modalRemoveTask.title = "Warning!"
+            this.modalRemoveTask.content = item
+            this.$root.$emit('bv::show::modal', 'modalRemoveTask', button)
+            this.show = true;
+        },
         resetModal (modal) {
             modal.title = ''
             modal.content = ''
@@ -153,6 +182,13 @@ export default {
         },
         deleteProject(id){
             axios.delete('http://127.0.0.1:8081/projects/'+id)
+            .then(this.$router.go())
+            .catch(e => {
+                this.errors.push(e)
+            });
+        },
+        deleteTask(id){
+            axios.delete('http://127.0.0.1:8081/tasks/'+id)
             .then(this.$router.go())
             .catch(e => {
                 this.errors.push(e)
@@ -176,7 +212,6 @@ export default {
                     this.errors.push(e)
             });
         },
-
         listAllTasksForProject(projectId){
             axios.get('http://127.0.0.1:8081/projects/' + projectId + '/tasks')
                 .then(response => {this.info = response.data; } )
@@ -188,8 +223,6 @@ export default {
     beforeMount(){
         const user = JSON.parse(localStorage.user)
         this.userData = JSON.parse(localStorage.user)
-        //console.log(user.dtype)
-        //this.listAllProjects(user);
         this.listAllTasksForProject(3);
         switch(user.dtype){
             case 'Manager':

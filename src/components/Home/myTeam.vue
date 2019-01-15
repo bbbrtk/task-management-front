@@ -12,12 +12,23 @@
                 <p class="card-text">
                 View or manage your team! 
                 </p>
-
                 <p class="card-text">
-               {{userData.myTeam}}
+                <table style="width:100%">
+                    <tr>
+                        <th>Name</th>
+                        <th>ID</th>
+                        <th>Company</th>
+                    </tr>
+                    <tr>
+                        <td>{{userData.myTeam.name}}</td>
+                        <td>{{userData.myTeam.id}}</td>
+                        <td>{{userData.myTeam.myCompany.name}}</td>
+                    </tr>
+                </table> 
                 </p>
                 <p class="card-text">
                 </p>
+                
                 <b-button href="#" variant="primary" @click="redirect('editTeam')">Manage your team</b-button>
             </b-card>
             
@@ -33,7 +44,6 @@ export default {
     name: 'myTeam',
     data() {
         return {
-            items : [],
             role : null,
             userData : null,
         }
@@ -42,6 +52,7 @@ export default {
         onSubmit(){
             axios.post('http://127.0.0.1:8081/'+ this.role, this.form)
                 .then(response => {
+                    console.log(response.data);
                     this.$router.go(-1)
                 })
                 .catch(e => {
@@ -73,7 +84,8 @@ export default {
 </script>
 
 <style>
-
+.card-text{
+    margin-top: 30px;
+}
 
 </style>
-

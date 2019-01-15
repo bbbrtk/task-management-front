@@ -26,16 +26,8 @@
                         <b-col sm="2"><label >Client: </label></b-col>
                         <b-col sm="10"><b-form-select v-model="form.myClient" :options="clientOpt" class="mb-3" /></b-col>
                     </b-row>
-                    <!-- <b-row>
-                        <b-col sm="2"><label >Workers: </label></b-col>
-                        <b-col sm="10"><b-form-select v-model="role" :options="roleOpt" class="mb-3" /></b-col>
-                    </b-row> -->
-                    
+                   
                 </b-container>
-
-                <template>
-                    <b-table striped hover :items="items"></b-table>
-                </template>
                     <b-button type="submit" variant="primary">Submit</b-button>
                     <b-button type="reset" variant="danger">Reset</b-button>
                 </b-form>
