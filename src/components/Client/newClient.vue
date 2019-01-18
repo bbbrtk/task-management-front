@@ -31,7 +31,7 @@
                     <b-row>
                         <b-col sm="2"><label >Date of estimation: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.dateOfEst" 
-                                                    placeholder="Enter date in YYYY-MM-DD format">
+                                                    type="date">
                         </b-form-input></b-col>
                     </b-row>
                     <b-row>

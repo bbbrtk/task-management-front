@@ -73,11 +73,19 @@ export default {
     }, 
     methods:{
         onSubmit(){
-            // this.form.team = null;
-            let config = {
-                'Access-Control-Allow-Origin' : '*',
+            switch(this.role){
+                case 'managers':
+                    this.form['@type'] = 'Manager'
+                    break
+                case 'developers':
+                    this.form['@type'] = 'Developer'
+                    break
+                case 'customers':
+                    this.form['@type'] = 'Customer'
+                break;
             }
-            // axios.defaults.headers.get['Access-Control-Allow-Origin'] = true;
+
+            
             axios.post('http://127.0.0.1:8081/'+ this.role, this.form)
                 .then(response => {
                     //console.log(response.data);

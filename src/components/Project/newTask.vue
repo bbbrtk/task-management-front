@@ -18,7 +18,7 @@
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Type: </label></b-col>
-                        <b-col sm="10"><b-form-select v-model="form.task_type" :options="dtypeOpt" class="mb-3" /></b-col>
+                        <b-col sm="10"><b-form-select v-model="dtype" :options="dtypeOpt" class="mb-3" /></b-col>
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Project: </label></b-col>
@@ -43,7 +43,7 @@
                     <b-row>
                         <b-col sm="2"><label >Deadline: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.deadline" 
-                                                    placeholder="Enter deadline in YYYY-MM-DD format"> 
+                                                    type="date"> 
                         </b-form-input></b-col>
                     </b-row>
                 </b-container>
@@ -85,12 +85,10 @@ export default {
     }, 
     methods:{
         onSubmit(){
-            let config = {
-                'Access-Control-Allow-Origin' : '*',
-            }
 
-            //axios.post('http://127.0.0.1:8081/' + this.dtype, this.form)
-            axios.post('http://127.0.0.1:8081/users', this.form)
+            // this.form.myUser.id = this.form.myUser.id
+            console.log(this.form)
+            axios.post('http://127.0.0.1:8081/'+ this.dtype, this.form)
                 .then(response => {
                     console.log(response.data);
                     this.$router.go(-1)

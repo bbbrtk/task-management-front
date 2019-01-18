@@ -29,7 +29,7 @@ export default new Router({
       component: Users
     },
     {
-      path :'users/:id',
+      path :'/users/:id',
       name: 'editUser',
       component: EditUser
     },

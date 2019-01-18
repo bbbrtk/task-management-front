@@ -38,7 +38,6 @@
                         </template>
                     </template>
                     <template slot="row-details" slot-scope="row">
-                        <b-card>
                             <template v-if="userData.dtype === 'Manager'">
                             <b-row class="mb-2" align-h="end">
                                        <b-button variant="success" @click="redirectTask('newTask',row.item.id, row.item)">New Task</b-button>
@@ -48,7 +47,6 @@
                                 <table id="firstTable" width=100%>
                                 <thead>
                                     <tr>
-                                    <th>ID</th>
                                     <th>Name</th>
                                     <th>State</th>
                                     <th>User</th>
@@ -60,11 +58,9 @@
                                 <tbody>
                                     <tr v-for="iter in info" :key="iter">
                                     <template v-if="iter.myProject.id === row.item.id">
-                                        <td>{{iter.id}}</td>
                                         <td>{{iter.name}}</td>
                                         <td>{{iter.state}}</td>
-                                        <!-- <td>{{iter.myUser.name}}</td> -->
-                                        <td>{{iter.myUser}}</td>
+                                        <td>{{iter.myUser.name}}</td>
                                         <td>{{iter.attachment}}</td>
                                         <td>{{iter.deadline}}</td>
                                             <template v-if="userData.dtype === 'Manager'">
@@ -79,7 +75,6 @@
                                 </tbody>
                                 </table>
                             </b-row>
-                        </b-card>
                     </template>
                 </b-table>
                                                 <!-- {{userData}} -->

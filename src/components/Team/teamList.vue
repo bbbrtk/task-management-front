@@ -91,6 +91,7 @@ export default {
         listAllTeamsInCompany(id){
             axios.get('http://127.0.0.1:8081/companies/' + id + '/teams')
                 .then(response => {
+                    console.log(response.data)
                     this.items = response.data;
                 })
                 .catch(e => {
@@ -100,6 +101,8 @@ export default {
     },
     beforeMount(){
         this.userData = JSON.parse(localStorage.user)
+
+        console.log(this.userData)
         //this.listAllTeams();
         this.listAllTeamsInCompany(this.userData.myTeam.myCompany.id);
 

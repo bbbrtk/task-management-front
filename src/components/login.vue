@@ -48,10 +48,6 @@ import { delay } from 'q';
     mounted() {},
     methods: {
         onSubmit(){
-            let config = {
-                'Access-Control-Allow-Origin' : '*',
-            }
-            // axios.defaults.headers.get['Access-Control-Allow-Origin'] = true;
             axios.post('http://127.0.0.1:8081/users/auth', this.form.name)
                 .then(response => {
                     if(response.data){

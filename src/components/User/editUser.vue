@@ -12,35 +12,109 @@
                     <b-container fluid>
                     <b-row>
                         <b-col sm="2"><label >Name: </label></b-col>
-                        <b-col sm="10"><b-form-input v-model="form.name" 
-                                                    :placeholder="this.user.name">
+                        <b-col sm="10"><b-form-input v-model="form.name"
+                                                    :value="user.name">
                         </b-form-input></b-col>
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Forname: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.forename" 
-                                                    :placeholder="this.user.forename">
+                                                    :value="user.forename">
                         </b-form-input></b-col>
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Email: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.email" 
-                                                    :placeholder="this.user.email">
+                                                    :value="user.email">
                         </b-form-input></b-col>
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Team: </label></b-col>
-                        <b-col sm="10"><b-form-select v-model="team" :options="teamOpt" class="mb-3" /></b-col>
+                        <b-col sm="10"><b-form-select v-model="team" :options="teams" class="mb-3" /></b-col>
                     </b-row>
                     <b-row>
                         <b-col sm="2"><label >Role: </label></b-col>
                         <b-col sm="10"><b-form-select v-model="role" :options="roleOpt" class="mb-3" /></b-col>
                     </b-row>
-                    
+                    <b-row v-if="role == 'Manager' || role == 'managers'">
+                        <b-col sm="2"><label >Certificate: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.certificate" 
+                                                    :value="this.user.certificate">
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-row v-if="role == 'Manager' || role == 'managers'">
+                        <b-col sm="2"><label >Position: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.position" 
+                                                    :value="this.user.position">
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-row v-if="role == 'Manager' || role == 'managers'">
+                        <b-col sm="2"><label >Expirience: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.expirience" 
+                                                    :value="this.user.expirience">
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-form-group v-if="role == 'Manager' || role == 'managers'">
+                        <b-col sm="2"><label >Projects: </label></b-col>
+                        <b-col sm="10">
+                            <b-form-checkbox-group stacked v-model="selected" name="flavour2" :options="projects">
+                            </b-form-checkbox-group>
+                        </b-col>
+                    </b-form-group>
+                    <b-row v-if="role == 'Developer'|| role == 'developers'">
+                        <b-col sm="2"><label > Type: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.type" 
+                                                    :value="this.user.type">
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-row v-if="role == 'Developer' || role == 'developers'">
+                        <b-col sm="2"><label > Info: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.into" 
+                                                    :value="this.user.info">
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-row v-if="role == 'Developer' || role == 'developers'">
+                        <b-col sm="2"><label > Rating: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.rating" 
+                                                    :value="this.user.rating">
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-row v-if="role == 'Developer' || role == 'developers'">
+                        <b-col sm="2"><label >Position: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.position" 
+                                                    :value="this.user.position">
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-row v-if="role == 'Developer' || role == 'developers'">
+                        <b-col sm="2"><label >Expirience: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.expirience" 
+                                                    :value="this.user.expirience">
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-form-group v-if="role == 'Developer' || role == 'developers'">
+                        <b-col sm="2"><label >Projects: </label></b-col>
+                        <b-col sm="10">
+                            <b-form-checkbox-group stacked v-model="selected" name="flavour2" :options="projects">
+                            </b-form-checkbox-group>
+                        </b-col>
+                    </b-form-group>
+                    <b-row v-if="role == 'Customer' || role == 'customers'">
+                        <b-col sm="2"><label > type: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.type" 
+                                                    :value="this.user.type">
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-row v-if="role == 'Developer' || role == 'customers'">
+                        <b-col sm="2"><label > Info: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.info" 
+                                                    :value="this.user.info">
+                        </b-form-input></b-col>
+                    </b-row>
                 </b-container>
                     <b-button type="submit" variant="primary">Submit</b-button>
                     <b-button type="reset" variant="danger">Reset</b-button>
                 </b-form>
+
             </b-card>
             
         </div>
@@ -56,13 +130,15 @@ export default {
     data() {
         return {
             form: {
-                email: '',
-                name: '',
-                forename: '',
-                info: '',
-                type: '',
-                certificate: '',
-                position: '',
+                id:'',
+                // email: '',
+                // name: '',
+                // forename: '',
+                // info: '',
+                // type: '',
+                // certificate: '',
+                // position: '',
+                // type : '',
             },
             role : null,
             team : null,
@@ -81,7 +157,7 @@ export default {
             ], 
             clients : [],
             managers : [],
-            projetcts: [],
+            projects: [],
             teams : [],
 
             role : null, 
@@ -91,15 +167,24 @@ export default {
         }
     }, 
     methods:{
+        
         onSubmit(){
-            // this.form.team = null;
-            let config = {
-                'Access-Control-Allow-Origin' : '*',
-            }
-            // axios.defaults.headers.get['Access-Control-Allow-Origin'] = true;
-            axios.post('http://127.0.0.1:8081/'+ this.role, this.form)
+            // console.log(this.form)
+
+            switch(this.role){
+                case 'managers':
+                    this.form['@type'] = 'Manager'
+                    break
+                case 'developers':
+                    this.form['@type'] = 'Developer'
+                    break
+                case 'customers':
+                    this.form['@type'] = 'Customer'
+                break;
+            }   
+            console.log(this.form)
+            axios.put('http://127.0.0.1:8081/'+ this.role +'/' + this.user.id, this.form)
                 .then(response => {
-                    console.log(response.data);
                     this.$router.go(-1)
                 })
                 .catch(e => {
@@ -110,7 +195,16 @@ export default {
 
         },
         getProjects(userId){
-            
+            axios.get('http://127.0.0.1:8081/projects/user-' + userId)
+                .then(response => {
+                    response.data.forEach(element => {
+                    
+                        this.projects.push({value : element, text: element.name})
+                    });
+                })
+                .catch(e => {
+                    this.errors.push(e)
+            });
         },
         getClients(){
             this.clients = this.user.clients
@@ -118,7 +212,9 @@ export default {
         getUserById(id){
             axios.get('http://127.0.0.1:8081/users/'+ id)
                 .then(response => {
+                    this.role = response.data.dtype
                     this.user = response.data
+                    this.form.id = id
                 })
                 .catch(e => {
                     this.errors.push(e)
@@ -126,20 +222,25 @@ export default {
         },
         getCompanyTeams(){
             const currUser = JSON.parse(localStorage.user)
-            axios.get('http://127.0.0.1:8081/companies/' + this.currUser.myTeam.myCompany.id + '/teams')
+
+            axios.get('http://127.0.0.1:8081/companies/' + currUser.myTeam.myCompany.id + '/teams')
                 .then(response => {
-                    this.teams = response.data;
+                    response.data.forEach(element => {
+                    
+                        this.teams.push({value : element, text: element.name})
+                    });
                 })
                 .catch(e => {
                     this.errors.push(e)
             });
-        },
+        }
     },
     beforeMount(){
         this.getUserById(this.$route.params.id)
-        this.role = this.user.dtype
+        this.getProjects(this.$route.params.id)
         this.getCompanyTeams()
-
+    }, 
+    mounted(){
     }
 }
 
