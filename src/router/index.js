@@ -5,6 +5,7 @@ import Users from '@/components/User/userList'
 import Home from '@/components/home'
 import EditUser from '@/components/User/editUser'
 import Projects from '@/components/Project/projectList'
+import EditProject from '@/components/Project/editProject'
 import newProject from '@/components/Project/newProject'
 import newTask from '@/components/Project/newTask'
 import Teams from '@/components/Team/teamList'
@@ -32,6 +33,11 @@ export default new Router({
       path :'/users/:id',
       name: 'editUser',
       component: EditUser
+    },
+    {
+      path :'/projects/:id',
+      name: 'editProject',
+      component: EditProject
     },
     {
       path: '/new-user',

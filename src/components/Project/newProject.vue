@@ -16,15 +16,22 @@
                                                     placeholder="Enter project name">
                         </b-form-input></b-col>
                     </b-row>
-                    <b-row>
+                    <!-- <b-row>
                         <b-col sm="2"><label >Duration: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.duration" 
                                                     placeholder="Enter duration">
                         </b-form-input></b-col>
-                    </b-row>
+                    </b-row> -->
                     <b-row>
                         <b-col sm="2"><label >Client: </label></b-col>
                         <b-col sm="10"><b-form-select v-model="form.myClient" :options="clientOpt" class="mb-3" /></b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col sm="2"><label >Users: </label></b-col>
+                        <b-col sm="10">
+                            <b-form-checkbox-group id="checkboxes1" name="flavour1" v-model="form.workerIds" :options="workers">
+                            </b-form-checkbox-group>
+                        </b-col>
                     </b-row>
                    
                 </b-container>
@@ -49,32 +56,51 @@ export default {
             items: [],
             clients: [],
             form: {
-                duration: '',
+                duration: 0,
                 name: '',
-                myManager: user,
                 myClient: null,
             },
             clientOpt: [],
+            workers : [],
         }
     }, 
     methods:{
         onSubmit(){
-            // this.form.team = null;
-            let config = {
-                'Access-Control-Allow-Origin' : '*',
-            }
-            // axios.defaults.headers.get['Access-Control-Allow-Origin'] = true;
             axios.post('http://127.0.0.1:8081/projects', this.form)
                 .then(response => {
                     //console.log(response.data);
+                    this.refreshUser();
                     this.$router.go(-1)
                 })
                 .catch(e => {
                     this.errors.push(e)
             });
+            
         },
         onReset(){
 
+        },
+        refreshUser(){
+            var user = JSON.parse(localStorage.user)
+            axios.get('http://127.0.0.1:8081/users/' + user.id)
+                .then(response => {
+                    localStorage.user = JSON.stringify(response.data)
+                })
+                .catch(e => {
+                    this.errors.push(e)
+            });
+        },
+        listAllWorkers(){
+            axios.get('http://127.0.0.1:8081/workers')
+                .then(response => {
+                    this.items = response.data;
+                    response.data.forEach(element => {
+                        this.workers.push({value : element.id, text: element.name})
+                    });
+                })
+                .catch(e => {
+                    this.errors.push(e)
+            });
         },
         listAllClients(){
             axios.get('http://127.0.0.1:8081/clients')
@@ -92,6 +118,7 @@ export default {
     },
     beforeMount(){
         this.listAllClients();
+        this.listAllWorkers();
         
     }
 }

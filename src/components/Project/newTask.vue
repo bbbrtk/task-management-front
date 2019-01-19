@@ -35,15 +35,21 @@
                         </b-form-input></b-col>
                     </b-row>
                     <b-row>
-                        <b-col sm="2"><label >Attachment: </label></b-col>
-                        <b-col sm="10"><b-form-input v-model="form.attachment" 
-                                                    placeholder="Enter attachment text">
-                        </b-form-input></b-col>
-                    </b-row>
-                    <b-row>
                         <b-col sm="2"><label >Deadline: </label></b-col>
                         <b-col sm="10"><b-form-input v-model="form.deadline" 
                                                     type="date"> 
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col sm="2"><label >Description: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.description" 
+                                                    placeholder="Enter task description">
+                        </b-form-input></b-col>
+                    </b-row>
+                    <b-row>
+                        <b-col sm="2"><label >Duration [h]: </label></b-col>
+                        <b-col sm="10"><b-form-input v-model="form.duration" 
+                                                    placeholder="Enter estimated task duration">
                         </b-form-input></b-col>
                     </b-row>
                 </b-container>

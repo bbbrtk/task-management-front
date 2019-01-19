@@ -1,84 +1,69 @@
 <template>
     <div id="projects">
         <div class="container">
-            <template v-if="userData.dtype === 'Manager'">
-                <b-row align-h="between">
-                    <b-col cols=5>
-                        <b-form-group horizontal label="Filter" class="mb-0">
-                        <b-input-group>
-                            <b-form-input v-model="filter" placeholder="Type to Search" />
-                            <b-input-group-append>
-                            <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
-                            </b-input-group-append>
-                        </b-input-group>
-                        </b-form-group>
-                    </b-col>
-                    <b-col cols=2>
-                        <b-button variant="success" @click="redirect('newProject')" >New Project</b-button>
-                    </b-col>
-                </b-row>
-            </template>
-            <b-row>
-                <p> </p>
-            </b-row>
-            
-            <b-row>
-                <b-table bordered striped hover :items="items" :fields="fields" :filter="filter">
-                    <template slot="actions" slot-scope="row">
-                            <b-button size="sm" @click.stop="row.toggleDetails">
-                                {{ row.detailsShowing ? 'Hide' : 'Show' }} Tasks
-                            </b-button>
-                            <template v-if="userData.dtype === 'Manager'">
-                                <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
-                                    Delete
+            <b-card class="text-center mainCard">
+                <div v-if="userData.dtype === 'Manager'">
+                    <b-alert show variant="primary">
+                        <b-row align-h="between">
+                            <b-col cols="auto">
+                                <b-form-group horizontal class="mb-0">
+                                    <b-input-group>
+                                        <b-form-input v-model="filter" placeholder="Type to Search" />
+                                        <b-input-group-append>
+                                            <b-btn :disabled="!filter" @click="filter = ''">Clear</b-btn>
+                                        </b-input-group-append>
+                                    </b-input-group>
+                                </b-form-group>
+
+                            </b-col>
+                            <b-col cols="auto">
+                                <b-button class="floatRight" variant="success" @click="redirect('newProject')" >New Project</b-button>
+                            </b-col>
+                        </b-row>
+                            
+                    </b-alert>
+                </div>
+                
+                <b-row>
+                    <b-table bordered striped hover :items="items" :fields="fields" :filter="filter">
+                        <template slot="actions" slot-scope="row">
+                                <b-button size="sm" @click.stop="row.toggleDetails">
+                                    {{ row.detailsShowing ? 'Hide' : 'Show' }} Tasks
                                 </b-button>
-                                <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
-                                    Edit
-                                </b-button>
-                        </template>
-                    </template>
-                    <template slot="row-details" slot-scope="row">
-                            <template v-if="userData.dtype === 'Manager'">
-                            <b-row class="mb-2" align-h="end">
-                                       <b-button variant="success" @click="redirectTask('newTask',row.item.id, row.item)">New Task</b-button>
-                            </b-row>
+                                <template v-if="userData.dtype === 'Manager'">
+                                    <b-button size="sm" @click.stop="removeProjectModalShow(row.item, row.index, $event.target)" class="mr-1">
+                                        Delete
+                                    </b-button>
+                                    <b-button size="sm" @click="smartRedirect(row.item)" class="mr-1">
+                                        Edit
+                                    </b-button>
+                                    <b-button size="sm" variant="primary" @click="redirectTask('newTask',row.item.id, row.item)">New Task</b-button>
                             </template>
-                            <b-row>
-                                <table id="firstTable" width=100%>
-                                <thead>
-                                    <tr>
-                                    <th>Name</th>
-                                    <th>State</th>
-                                    <th>User</th>
-                                    <th>Attachment</th>
-                                    <th>Deadline</th>
-                                    <th> Actions </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="iter in info" :key="iter">
-                                    <template v-if="iter.myProject.id === row.item.id">
-                                        <td>{{iter.name}}</td>
-                                        <td>{{iter.state}}</td>
-                                        <td>{{iter.myUser.name}}</td>
-                                        <td>{{iter.attachment}}</td>
-                                        <td>{{iter.deadline}}</td>
-                                            <template v-if="userData.dtype === 'Manager'">
-                                                <td> 
-                                                    <b-button size="sm" @click.stop="removeTaskModalShow(row.item, row.index, $event.target)" class="mr-1">
-                                                        Delete
-                                                    </b-button>
-                                                </td>
-                                            </template>
-                                    </template>
-                                    </tr>
-                                </tbody>
-                                </table>
-                            </b-row>
-                    </template>
-                </b-table>
-                                                <!-- {{userData}} -->
-            </b-row>
+                        </template>
+                        <template small slot="row-details" slot-scope="row">
+                                <template v-if="userData.dtype === 'Manager'">
+                                
+                                </template>
+                                <b-row>
+                                    <b-card-group class="myPadding" columns>
+                                        <b-card v-for="iter in info" :key="iter" border-variant="primary"
+                                                header-bg-variant="primary"
+                                                header-text-variant="white"
+                                                align="center">
+                                            <b-card-header>
+                                                <b> {{iter.name}}</b>
+                                            </b-card-header>
+                                            <b-badge variant="primary">{{iter.deadline}}</b-badge>
+                                            <b-badge variant="warning">{{iter.myUser.name}}</b-badge>
+                                            <p class="card-text">{{iter.description}}</p>
+                                            <b-progress :value="iter.state" :max="100" show-progress animated></b-progress>
+                                        </b-card>
+                                    </b-card-group>
+                                </b-row>
+                        </template>
+                    </b-table>
+                </b-row>
+            </b-card>
         </div>
         <b-modal id="modalInfo" @hide="resetModal(modalInfo)" :title="modalInfo.title" ok-only>
             <pre>{{ modalInfo.content }}</pre>
@@ -171,6 +156,9 @@ export default {
         redirect(path){
             this.$router.push({ name: 'newProject'})
         },
+        smartRedirect(row){
+            this.$router.push({name: 'editProject', params:{id: row.id} })
+        },
         redirectTask(path, id_project, the_project){
             localStorage.project = JSON.stringify(the_project);
             this.$router.push({ name: path, params: {projectId : id_project}})
@@ -190,12 +178,8 @@ export default {
             });
         },
         listAllProjects(id){
-            axios.get('http://127.0.0.1:8081/projects/user-' + id)
-                .then(response => {
-                    this.items = response.data;
-                })
-                .catch(e => {
-                    this.errors.push(e)
+            this.userData.projects.forEach(element => {
+                this.items.push(element)
             });
         },
         listAllProjectsCustomer(id){
@@ -217,6 +201,7 @@ export default {
     },
     beforeMount(){
         const user = JSON.parse(localStorage.user)
+        console.log(user)
         this.userData = JSON.parse(localStorage.user)
         this.listAllTasksForProject(3);
         switch(user.dtype){
@@ -239,5 +224,19 @@ export default {
 </script>
 
 <style>
+
+.mainCard{
+    margin-top: 20px;
+}
+
+.floatRight{
+    margin-right: 20px;
+}
+
+.myPadding{
+    padding: 20px;
+}
+
+
 </style>
 

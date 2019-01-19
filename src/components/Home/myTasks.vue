@@ -70,14 +70,14 @@ export default {
 
         switch(user.dtype){
             case 'Manager':
-                axios.get('http://127.0.0.1:8081/managers/' + user.id + '/home-card')
-                .then(response => {
-                    this.items = response.data;
-                    //console.log(response.data);
-                })
-                .catch(e => {
-                    this.errors.push(e)
-            });
+                // axios.get('http://127.0.0.1:8081/managers/' + user.id + '/home-card')
+                //     .then(response => {
+                //         this.items = response.data;
+                //         //console.log(response.data);
+                //     })
+                //     .catch(e => {
+                //         this.errors.push(e)
+                // });
 
                 break;
             case 'Developer':

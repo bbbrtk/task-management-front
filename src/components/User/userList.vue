@@ -153,12 +153,10 @@ export default {
             });
         },
         listAllUsers(){
-            let config = {
-            'Access-Control-Allow-Origin' : '*',
-            }
-            // axios.defaults.headers.get['Access-Control-Allow-Origin'] = true;
-            axios.get('http://127.0.0.1:8081/users',config)
+            axios.get('http://127.0.0.1:8081/users')
                 .then(response => {
+                    console.log(response.data)
+                    console.log("dupsko")
                     this.items = response.data;
                     
                 })
