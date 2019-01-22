@@ -10,6 +10,7 @@ import newProject from '@/components/Project/newProject'
 import newTask from '@/components/Project/newTask'
 import Teams from '@/components/Team/teamList'
 import newTeam from '@/components/Team/newTeam'
+import editTeam from '@/components/Team/editTeam'
 import Companies from '@/components/Company/companyList'
 import Clients from '@/components/Client/clientList'
 import newClient from '@/components/Client/newClient'
@@ -68,6 +69,11 @@ export default new Router({
       path: '/new-team',
       name: 'newTeam',
       component: newTeam
+    },
+    {
+      path :'/edit-team',
+      name: 'editTeam',
+      component: editTeam
     },
     {
       path: '/companies',

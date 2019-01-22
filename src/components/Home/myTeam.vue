@@ -29,7 +29,7 @@
                 <p class="card-text">
                 </p>
                 
-                <b-button href="#" variant="primary" @click="redirect('editTeam')">Manage your team</b-button>
+                <b-button variant="primary" @click="redirect('')">Manage your team</b-button>
             </b-card>
             
         </div>
@@ -63,7 +63,7 @@ export default {
 
         },
         redirect(path){
-            this.$router.push({ name: path})
+            this.$router.push({ name: 'teams'})
         },
         getMyTeam(id){
             axios.get('http://127.0.0.1:8081/teams/' + id)
