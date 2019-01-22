@@ -40,26 +40,33 @@
                                     <b-button size="sm" variant="primary" @click="redirectTask('newTask',row.item.id, row.item)">New Task</b-button>
                             </template>
                         </template>
-                        <template small slot="row-details" slot-scope="row">
-                                <template v-if="userData.dtype === 'Manager'">
-                                
-                                </template>
+                        <template small slot="row-details" slot-scope="row">                                 
                                 <b-row>
                                     <b-card-group class="myPadding" columns>
-                                        <b-card v-for="iter in info" :key="iter" border-variant="primary"
+                                    <!-- <b-list-group> -->
+                                        <b-list-group v-for="iter in info" :key="iter" 
+                                                border-variant="white"
                                                 header-bg-variant="primary"
                                                 header-text-variant="white"
                                                 align="center">
-                                            <b-card-header>
-                                                <b> {{iter.name}}</b>
-                                            </b-card-header>
-                                            <b-badge variant="primary">{{iter.deadline}}</b-badge>
-                                            <b-badge variant="warning">{{iter.myUser.name}}</b-badge>
-                                            <p class="card-text">{{iter.description}}</p>
-                                            <b-progress :value="iter.state" :max="100" show-progress animated></b-progress>
-                                        </b-card>
+                                            <template v-if="row.item.id === iter.myProject.id">
+                                                <b-card-header>
+                                                    <b> {{iter.name}}</b>
+                                                </b-card-header>
+                                                <b-badge variant="primary">{{iter.deadline}}</b-badge>
+                                                <b-badge variant="warning">{{iter.myUser.name}}</b-badge>
+                                                <p class="card-text">{{iter.description}}</p>
+                                                <b-progress :value="iter.state" :max="100" show-progress animated></b-progress>
+                                                <b-button size="sm" @click.stop="removeTaskModalShow(iter, $event.target)" class="mr-1">
+                                                    Delete
+                                                </b-button>
+                                            </template>
+                                        </b-list-group>
+                                    <!-- </b-list-group> -->
                                     </b-card-group>
                                 </b-row>
+
+
                         </template>
                     </b-table>
                 </b-row>
@@ -143,7 +150,7 @@ export default {
             this.$root.$emit('bv::show::modal', 'modalRemoveProject', button)
             this.show = true;
         },
-        removeTaskModalShow(item, index, button){
+        removeTaskModalShow(item, button){
             this.modalRemoveTask.title = "Warning!"
             this.modalRemoveTask.content = item
             this.$root.$emit('bv::show::modal', 'modalRemoveTask', button)

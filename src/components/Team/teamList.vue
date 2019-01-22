@@ -23,9 +23,23 @@
             </b-row>
             <b-row>
                 <b-table bordered striped hover :items="items" :fields="fields" :filter="filter">
+                    <template slot="actions" slot-scope="row">
+                        <template v-if="userData.dtype === 'Manager'">
+                            <!-- <b-button size="sm" @click.stop="removeUserModalShow(row.item, row.index, $event.target)" class="mr-1">
+                            Delete
+                            </b-button> -->
+                            <b-button size="sm" @click="smartRedirect(row.item)" class="mr-1">
+                            Edit
+                            </b-button>
+                        </template>
+                    </template>
                 </b-table>
             </b-row>
         </div>
+        <!-- <b-modal id="modalRemoveTeam" hide-footer @hide="resetModal(modalRemoveTeam)" :title="modalRemoveUser.title">
+            <pre>Are you sure ? <strong>{{ modalRemoveTeam.content.name }}</strong> will be very sad</pre>
+            <b-btn class="mt-3" variant="outline-danger" block @click="deleteUser(modalRemoveTeam.content.id)">DELETE</b-btn>
+        </b-modal> -->
     </div>
 
     
@@ -63,6 +77,11 @@ export default {
                         label:"Company",
                         sortable: true
                     },
+                    {
+                        key: 'actions',
+                        label:"Actions",
+                        sortable: false
+                    },
                 ],
         }
     }, 
@@ -74,6 +93,9 @@ export default {
         },
         redirect(path){
             this.$router.push({ name: 'newTeam'})
+        },
+        smartRedirect(row){
+            this.$router.push({name: 'editTeam', params:{id: row.id} })
         },
         listAllTeams(){
             let config = {
