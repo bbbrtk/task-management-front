@@ -8,6 +8,7 @@ import Projects from '@/components/Project/projectList'
 import EditProject from '@/components/Project/editProject'
 import newProject from '@/components/Project/newProject'
 import newTask from '@/components/Project/newTask'
+import editTask from '@/components/Project/editTask'
 import Teams from '@/components/Team/teamList'
 import newTeam from '@/components/Team/newTeam'
 import editTeam from '@/components/Team/editTeam'
@@ -59,6 +60,11 @@ export default new Router({
       path: '/project/:projectId/new-task/',
       name: 'newTask',
       component: newTask
+    },
+    {
+      path :'/edit-task',
+      name: 'editTask',
+      component: editTask
     },
     {
       path: '/teams',

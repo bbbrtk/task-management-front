@@ -57,6 +57,9 @@
                                                 <b-badge variant="warning">{{iter.myUser.name}}</b-badge>
                                                 <p class="card-text">{{iter.description}}</p>
                                                 <b-progress :value="iter.state" :max="100" show-progress animated></b-progress>
+                                                <b-button size="sm" @click="smartRedirectTask(iter)" class="mr-1">
+                                                    Edit
+                                                </b-button>
                                                 <b-button size="sm" @click.stop="removeTaskModalShow(iter, $event.target)" class="mr-1">
                                                     Delete
                                                 </b-button>
@@ -165,6 +168,9 @@ export default {
         },
         smartRedirect(row){
             this.$router.push({name: 'editProject', params:{id: row.id} })
+        },
+        smartRedirectTask(row){
+            this.$router.push({name: 'editTask', params:{id: row.id} })
         },
         redirectTask(path, id_project, the_project){
             localStorage.project = JSON.stringify(the_project);
