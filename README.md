@@ -1,15 +1,16 @@
 # Promanage
-## Project and task management web application
+### Project and task management web application
 To manage and organize work in teams.
 Using 3 levels of hierarchy (Manager, Client, Developer) you can create/update projects or tasks, declare states and steps, assign them to your co-workers, upload attachements, set deadlines and reminders and so on...
 Inspired by task-management apps like [Trello](https://trello.com/) or [Redmine](https://www.redmine.org/).
-Workshops Final Project on Poznan University of Technology 
 
-## Technologies
+  Workshops Final Project on Poznan University of Technology 
+
+### Technologies
 * VueJS
 * HTML5
 
-## Build Setup
+### Build Setup
 
 ``` bash
 # install dependencies
@@ -27,4 +28,3 @@ npm run build --report
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
-## 
