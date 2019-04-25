@@ -1,6 +1,6 @@
-# promanage_fe
+## Frontend of task management web application
 
-> databases project frontend
+> 
 
 ## Build Setup
 
