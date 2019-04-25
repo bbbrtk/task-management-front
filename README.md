@@ -4,7 +4,7 @@ To manage and organize work in teams.
 Using 3 levels of hierarchy (Manager, Client, Developer) you can create/update projects or tasks, declare states and steps, assign them to your co-workers, upload attachements, set deadlines and reminders and so on...
 Inspired by task-management apps like [Trello](https://trello.com/) or [Redmine](https://www.redmine.org/).
 
-  Workshops Final Project on Poznan University of Technology 
+- [x] *Workshops Final Project on Poznan University of Technology*
 
 ### Technologies
 * VueJS
